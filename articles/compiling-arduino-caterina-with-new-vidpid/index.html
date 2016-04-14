@@ -106,7 +106,7 @@ Steven Casagrande            </a>
 <p>With your two VID/PID pairs in hand, lets compile the bootloader. I am going to be making the assumption that this is taking place on a Linux machine. The steps themselves will be very similar for compiling on a Windows machine, but require a few extra steps to get the path variables all setup. Honestly its a pain in the arse and I hate doing development work on Windows.</p>
 <p><strong>Step 1:</strong> Make sure the Arduino IDE is installed. This ensures you have all the required tools as well as the source code.</p>
 <p><strong>Step 2:</strong> Download LUFA-111009 and unpack it in the same directory as your caterina folder. By default on ubuntu, this will be <code>/usr/share/arduino/hardware/arduino/bootloaders</code></p>
-<p><strong>Step 3:</strong> This step is optional. Open Descriptors.c located at <code>/usr/share/arduino/hardware/arduino/bootloaders/caterina/Descriptors.c</code> . Navigate down to line 192 (<code>const USB_Descriptor_String_t ProductString</code>). Here you can add a product ID string for your PID. For example, I added:</p>
+<p><strong>Step 3:</strong> This step is optional. Open <code>Descriptors.c</code> located at <code>/usr/share/arduino/hardware/arduino/bootloaders/caterina/Descriptors.c</code> . Navigate down to line 192 (<code>const USB_Descriptor_String_t ProductString</code>). Here you can add a product ID string for your PID. For example, I added:</p>
 <div class="highlight"><pre><span></span><span class="cp">#elif DEVICE_PID == 0x609C</span>
 <span class="p">.</span><span class="n">UnicodeString</span> <span class="o">=</span> <span class="s">L&quot;Galvant antiAFk &quot;</span>
 </pre></div>
