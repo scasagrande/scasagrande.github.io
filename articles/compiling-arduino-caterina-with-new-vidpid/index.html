@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Compiling Arduino Caterina with New VID/PID - Steven Casagrande</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/articles/compiling-arduino-caterina-with-new-vidpid/">
+
+        <meta name="author" content="Steven Casagrande" />
+        <meta name="description" content="Compiling the Arduino Leonardo bootloader (aka Caterina) is a required step in making your own Arduino Leonardo-compatible board available to others. This blog post will go over what you need to do in order to make your derivative board valid for sale. As opposed to previous Arduinos, the Leonardo uses ..." />
+
+        <meta property="og:site_name" content="Steven Casagrande" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Compiling Arduino Caterina with New VID/PID"/>
+        <meta property="og:url" content="/articles/compiling-arduino-caterina-with-new-vidpid/"/>
+        <meta property="og:description" content="Compiling the Arduino Leonardo bootloader (aka Caterina) is a required step in making your own Arduino Leonardo-compatible board available to others. This blog post will go over what you need to do in order to make your derivative board valid for sale. As opposed to previous Arduinos, the Leonardo uses ..."/>
+        <meta property="article:published_time" content="2014-02-19" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:author" content="Steven Casagrande" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Steven Casagrande ATOM Feed"/>
+
+
+
+        <link href="/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Steven Casagrande blog ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Steven Casagrande            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                    <li><a href="/cv">CV</a></li>
+                        <li class="active">
+                            <a href="/category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/articles/compiling-arduino-caterina-with-new-vidpid/"
+                       rel="bookmark"
+                       title="Permalink to Compiling Arduino Caterina with New VID/PID">
+                        Compiling Arduino Caterina with New VID/PID
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-02-19T00:00:00-05:00"> Wed 19 February 2014</time>
+    </span>
+
+
+
+
+
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>Compiling the Arduino Leonardo bootloader (aka Caterina) is a required step in making your own Arduino Leonardo-compatible board available to others. This blog post will go over what you need to do in order to make your derivative board valid for sale.</p>
+<p>As opposed to previous Arduinos, the Leonardo uses the built-in USB of the atmega32u4 rather than a discrete USB-to-serial IC. All USB devices have two identification numbers: a vendor ID (VID) and a product ID (PID). Each organization that produces USB devices pays the USB-IF for a VID, giving them the ability to self-issue PIDs. Although the Arduino is open source hardware, this does not include the rights to use their VID in derivative products. You must obtain your own VID/PID pair and recompile the bootloader. In fact, you actually will need two PIDs for this project, one for the bootloader and one for the running sketch.</p>
+<p>How you obtain your VID/PID pairs is beyond the scope of this article. I will offer one suggestion. If you release your project as open source, you can ask the folks at the Openmoko project to be issues a PID with their VID. You can see more details about that here: <a href="http://wiki.openmoko.org/wiki/USB_Product_IDs">http://wiki.openmoko.org/wiki/USB_Product_IDs</a></p>
+<p>With your two VID/PID pairs in hand, lets compile the bootloader. I am going to be making the assumption that this is taking place on a Linux machine. The steps themselves will be very similar for compiling on a Windows machine, but require a few extra steps to get the path variables all setup. Honestly its a pain in the arse and I hate doing development work on Windows.</p>
+<p><strong>Step 1:</strong> Make sure the Arduino IDE is installed. This ensures you have all the required tools as well as the source code.</p>
+<p><strong>Step 2:</strong> Download LUFA-111009 and unpack it in the same directory as your caterina folder. By default on ubuntu, this will be <code>/usr/share/arduino/hardware/arduino/bootloaders</code></p>
+<p><strong>Step 3:</strong> This step is optional. Open Descriptors.c located at <code>/usr/share/arduino/hardware/arduino/bootloaders/caterina/Descriptors.c</code> . Navigate down to line 192 (<code>const USB_Descriptor_String_t ProductString</code>). Here you can add a product ID string for your PID. For example, I added:</p>
+<div class="highlight"><pre><span></span><span class="cp">#elif DEVICE_PID == 0x609C</span>
+<span class="p">.</span><span class="n">UnicodeString</span> <span class="o">=</span> <span class="s">L&quot;Galvant antiAFk &quot;</span>
+</pre></div>
+
+
+<p>Directly below the Arduino Esplora entry. Notice line 194 which specifies a string length of 16 characters. If you entry is less, add some spaces on the end (as done with the Arduino Micro). If it is more, you will need to increase this value in one of two ways. Either increase it here at this line and add spaces to pad out all the existing Arduino strings, or move this line within the #if #endif block. Do the same for the VID entries directly below. Here is the entire block for the VID copied from my file:</p>
+<div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">USB_Descriptor_String_t</span> <span class="n">ManufNameString</span> <span class="o">=</span>
+<span class="p">{</span>
+    <span class="cp">#if DEVICE_VID == 0x2341</span>
+    <span class="p">.</span><span class="n">Header</span> <span class="o">=</span> <span class="p">{.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">USB_STRING_LEN</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span> <span class="p">.</span><span class="n">Type</span> <span class="o">=</span> <span class="n">DTYPE_String</span><span class="p">},</span>
+    <span class="p">.</span><span class="n">UnicodeString</span> <span class="o">=</span> <span class="s">L&quot;Arduino LLC&quot;</span>
+    <span class="cp">#elif DEVICE_VID == 0x1D50</span>
+    <span class="p">.</span><span class="n">Header</span> <span class="o">=</span> <span class="p">{.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">USB_STRING_LEN</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span> <span class="p">.</span><span class="n">Type</span> <span class="o">=</span> <span class="n">DTYPE_String</span><span class="p">},</span>
+    <span class="p">.</span><span class="n">UnicodeString</span> <span class="o">=</span> <span class="s">L&quot;Galvant Industries&quot;</span>
+    <span class="cp">#else</span>
+    <span class="p">.</span><span class="n">Header</span> <span class="o">=</span> <span class="p">{.</span><span class="n">Size</span> <span class="o">=</span> <span class="n">USB_STRING_LEN</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span> <span class="p">.</span><span class="n">Type</span> <span class="o">=</span> <span class="n">DTYPE_String</span><span class="p">},</span>
+    <span class="p">.</span><span class="n">UnicodeString</span> <span class="o">=</span> <span class="s">L&quot;Unknown &quot;</span>
+    <span class="cp">#endif</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<p><strong>Step 4:</strong> Open the Makefile (<code>/usr/share/arduion/hardware/arduino/bootloaders/caterina/Makefile</code>) and look for the variable called “LUFA_PATH”. This should be around line 130. Modify this line to point to the folder LUFA-111009 that you extracted. If you have been following my instructions, this line should read <code>&lt;code&gt;LUFA_PATH = ../LUFA-111009&lt;/code&gt;</code></p>
+<p><strong>Step 5:</strong> At the beginning of the Makefile after the file header is where the VID and PID are defined. Comment out any VID or PID currently specified and replace the entires with your VID and PID. The PID that you select here (out of your two) will be the one that is used for the bootloader. Mine looks like this:</p>
+<div class="highlight"><pre><span></span><span class="cp"># USB vendor ID (VID)</span>
+<span class="cp"># reuse of this VID by others is forbidden by USB-IF</span>
+<span class="cp"># official Arduino LLC VID</span>
+<span class="cp"># VID = 0x2341</span>
+<span class="cp"># Openmoko VID</span>
+<span class="n">VID</span> <span class="o">=</span> <span class="mh">0x1D50</span>
+
+<span class="cp"># USB product ID (PID)</span>
+<span class="cp"># official Leonardo PID</span>
+<span class="cp"># PID = 0x0036</span>
+<span class="cp"># official Micro PID</span>
+<span class="cp"># PID = 0x0037</span>
+<span class="cp"># official Esplora PID</span>
+<span class="cp"># PID = 0x003C</span>
+<span class="cp"># antiAFK PID</span>
+<span class="n">PID</span> <span class="o">=</span> <span class="mh">0x60A3</span>
+</pre></div>
+
+
+<p><strong>Step 6:</strong> Open your terminal and change directory to <code>/usr/share/arduino/hardware/arduino/bootloaders/caterina</code> and run make clean and make all. Depending on your account permissions this may have to be run as the super user. The compiled bootloader will be named <code>Caterina.hex</code>.</p>
+<p><strong>Step 7:</strong> Rename <code>Caterina.hex</code> to something such as <code>Caterina-boardname.hex</code> so that it is not overridden in the future.</p>
+<p><strong>Step 8:</strong> Open <code>boards.txt</code> (normally located at <code>/usr/share/arduino/hardware/arduino/boards.txt</code>). Copy and paste the entry for the Leonardo to the bottom of the file. Replace the leonardo at the beginning of each line with the name of your board and modify the rest of the entries as required. The key ones are the name (what you want it to show up as in the Arduino IDE) and <code>bootloader.file</code> (the name that you renamed <code>Caterina.hex</code> to in step 7).</p>
+<p><strong>Step 9:</strong> Still at <code>boards.txt</code>, you want to change the <code>build.vid</code> and <code>build.pid</code> entries. For PID, you want to enter your OTHER PID, not the one you used in the earlier steps. This entry here is the VID/PID pair that will be used for the sketch which must be distinct from the bootloader PID. These changes to <code>boards.txt</code> must be located on any computer that will upload a sketch to your board in order to use to correct sketch VID/PID pair. Here is my boards.txt entry:</p>
+<div class="highlight"><pre><span></span>antiAFK.name=Galvant antiAFK
+antiAFK.upload.protocol=avr109
+antiAFK.upload.maximum_size=28672
+antiAFK.upload.speed=57600
+antiAFK.upload.disable_flushing=true
+antiAFK.bootloader.low_fuses=0xff
+antiAFK.bootloader.high_fuses=0xd8
+antiAFK.bootloader.extended_fuses=0xcb
+antiAFK.bootloader.path=caterina
+antiAFK.bootloader.file=Caterina-antiAFK.hex
+antiAFK.bootloader.unlock_bits=0x3F
+antiAFK.bootloader.lock_bits=0x2F
+antiAFK.build.mcu=atmega32u4
+antiAFK.build.f_cpu=16000000L
+antiAFK.build.vid=0x1D50
+antiAFK.build.pid=0x609C
+antiAFK.build.core=arduino
+antiAFK.build.variant=leonardo
+</pre></div>
+
+
+<p><strong>Step 10:</strong> Burn the bootloader to your board! I just use my Arduino Uno and the Arduino IDE for this. To do the same, look up how to use the Uno as an ISP. Basically you upload the ArduinoISP example to your Uno, then select Tools-&gt;Programmer-&gt;Arduino as ISP, Tools-&gt;Serial Port-&gt;{your Uno}, Tools-&gt;Board-&gt;{which bootloader you want to burn}, then connect everything up and hit Tools-&gt;Burn Bootloader.</p>
+<p><strong>Step 11:</strong> If you are running Linux, connect your new board to your PC and start uploading sketches! Sadly if you are running Windows, there is still a few more steps. You see, Windows does USB differently than the others. Linux looks at the enumeration and checks for standard types. If it is non-standard, it will then look at the VID/PID and search for a matching kernel module. Windows goes straight to looking at the VID/PID. So even though your device is functionally equivalent to the Arduino Leonardo, Windows will refuse to let you use it without a dedicated driver. An example driver file can be found <a href="https://github.com/Galvant/usb_drivers/blob/master/Galvant_USB_driver.inf">on GitHub</a>. Scroll down to the section “Vendor and Product ID Definitions” at line 78. Here, modify the beginning of each entry with the name of your product. IE, replace <code>antiAFK.bootloader</code> and <code>antiAFK.sketch</code> with <code>yourproduct.bootloader</code> and <code>yourproduct.sketch</code>. On each line there are two references to the VID and PID. Make you you replace all instances of the VID and PID with yours. There are two entries per line, and two lines per bootloader and sketch (one for 32 and one for 64 bit). Make super sure you have replaced ALL INSTANCES OF VID&amp;PID WITH YOUR VALUES. Windows likes to cache USB information, even if you delete the driver, in the registry and this can be a pain in the arse to remove. MAKE SURE YOU PUT THE CORRECT VID/PID PAIR FOR BOOTLOADER AND THE CORRECT ONE FOR SKETCH. At the bottom on the file are a bunch of strings. Replace them as you see fit. Specifically, make sure to replace <code>MFGNAME</code> and <code>INSTDISK</code>, while also replacing <code>antiAFK.bootloader</code> and <code>antiAFK.sketch</code> with your own products and their strings.</p>
+<p><strong>Step 12:</strong> On Windows, connect your device to your PC. Windows will complain about having no driver file. Go into the device manager (Start-&gt;Control Panel-&gt;Device Manager), right click on the device, update driver, and point it to the folder containing your INF file. Accept the dialog about the driver not being signed. Windows will then automatically use this file in the future for any USB devices with matching VID/PIDs pairs. You should now see in the device manager an entry for the bootloader. For my antiAFK, there would be an entry called “Galvant antiAFK Loader”. The first time you upload a sketch Windows will once again have to install the driver for the different sketch-PID. However, it will have your INF already stored and will do so automatically.</p>
+<p>And you’re done! It’s a lot of steps, but I hope it helps.</p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="http://github.com/scasagrande"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/stevecasagrande"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+                <li class="list-group-item"><a href="https://www.linkedin.com/in/steven-casagrande-633ba533"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+              </ul>
+            </li>
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://www.github.com/Galvant/InstrumentKit" target="_blank">
+                InstrumentKit
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://galvant.ca/" target="_blank">
+                Galvant Industries
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2014 Steven Casagrande
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>
