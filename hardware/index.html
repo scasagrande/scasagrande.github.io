@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Hardware Projects - Steven Casagrande</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/hardware">
+
+        <meta name="author" content="Steven Casagrande" />
+        <meta name="description" content="GPIBUSB Adpater Languages: C Platform: Microchip PIC18F4520 Source Code: Firmware Circuit Board Bootloader Documentation About: This project was borne out of my frustration with proprietary GPIB to USB adapters. They typically require large driver downloads and very specific operating system and programming language combinations. Fet up with their high prices ..." />
+
+    <meta property="og:site_name" content="Steven Casagrande" />
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Hardware Projects"/>
+    <meta property="og:url" content="/hardware"/>
+    <meta property="og:description" content="GPIBUSB Adpater Languages: C Platform: Microchip PIC18F4520 Source Code: Firmware Circuit Board Bootloader Documentation About: This project was borne out of my frustration with proprietary GPIB to USB adapters. They typically require large driver downloads and very specific operating system and programming language combinations. Fet up with their high prices ..." />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Steven Casagrande ATOM Feed"/>
+
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Steven Casagrande            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/cv">
+                             CV
+                          </a></li>
+                         <li class="active"><a href="/hardware">
+                             Hardware
+                          </a></li>
+                         <li><a href="/software">
+                             Software
+                          </a></li>
+                         <li><a href="/media">
+                             Media
+                          </a></li>
+                        <li >
+                            <a href="/category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content" class="body">
+        <h1 class="entry-title">Hardware Projects</h1>
+        
+        <div class="entry-content">
+            <div class="section" id="gpibusb-adpater">
+<h2>GPIBUSB Adpater</h2>
+<p><strong>Languages</strong>: C</p>
+<p><strong>Platform</strong>: Microchip PIC18F4520</p>
+<p><strong>Source Code</strong>:
+<a class="reference external" href="https://www.github.com/Galvant/gpibusb-firmware">Firmware</a>
+<a class="reference external" href="https://www.github.com/Galvant/gpibusb-pcb">Circuit Board</a>
+<a class="reference external" href="https://www.github.com/Galvant/gpibusb-bootloader">Bootloader</a>
+<a class="reference external" href="https://www.github.com/Galvant/gpibusb-documentation">Documentation</a></p>
+<p><strong>About</strong>: This project was borne out of my frustration with proprietary GPIB to USB adapters. They typically require large driver downloads and very specific operating system and programming language combinations. Fet up with their high prices, I decided to create my own. The current version uses a Microchip PIC 18F4520 8-bit microcontroller for the main protocol conversion, an FTDI 230X for USB-to-Serial conversion, and the proper TI GPIB line driver ICs to interface the micro with the bus.</p>
+<p><strong>Videos</strong>:
+<a class="reference external" href="https://www.youtube.com/watch?v=D2a0hIxYlsY">Video 1</a></p>
+</div>
+<div class="section" id="antiafk">
+<h2>antiAFK</h2>
+<p><strong>Languages</strong>: Arduino Wiring</p>
+<p><strong>Platform</strong>: ATMega32u4</p>
+<p><strong>Source Code</strong>:
+<a class="reference external" href="https://www.github.com/Galvant/antiafk_firmware">Firmware</a>
+<a class="reference external" href="https://www.github.com/Galvant/antiafk-pcb">Circuit Board</a></p>
+<p><strong>About</strong>: The antiAFK in simply a small USB-enabled dongle which acts like an HID keyboard. The main purpose and motivation behind this project was to have a small device which could be inserted into a computer's USB port to provide psudorandom keypresses to help prevent automatic logging out of online connected video games. These keypress events occur based on a stored period and variance, have a randomized press duration, and the key is chosen from a stored set (default is WASD and space). Settings are configurable through a virtual serial interface and are stored in the microcontroller EEPROM.</p>
+<p><strong>Videos</strong>:
+<a class="reference external" href="https://www.youtube.com/watch?v=YMG83dEu700">Video 1</a></p>
+</div>
+<div class="section" id="usb-wrapper">
+<h2>USB Wrapper</h2>
+<p><strong>Source Code</strong>:
+<a class="reference external" href="https://www.github.com/Galvant/usb_wrapper-pcb">Circuit Board</a></p>
+<p><strong>About</strong>: Connecting personal USB enabled devices to unknown ports can present a problem. Perhaps you want to connect your cell phone to a friends computer to charge it, but don't want their OS to start trying to interact with your phone. Or maybe you're trying to plug into an untrusted power source, such as a power adapter at an airport.</p>
+<p>The USB Wrapper helps with the above by severing the USB data lines and only allowing the power lines to connect through. This ensures that no data information can be transferred between the power source and your device. This helps against known attacks such as juice jacking: <a class="reference external" href="http://krebsonsecurity.com/2011/08/beware-of-juice-jacking/">http://krebsonsecurity.com/2011/08/beware-of-juice-jacking/</a></p>
+<p>The USB Wrapper also addresses the problem where legitimate USB chargers use the data lines to communicate to the device how much power they are capable of sourcing. Different manufacturers do this differently, but thankfully most have agreed on one way. My solution is to use slider switches allowing emulation of whatever standard you'd like.</p>
+<p><strong>Features</strong>:</p>
+<ul class="simple">
+<li>Disconnects USB data lines between the host and device, preventing attacks such as &quot;juice jacking&quot; and keeps trusted computers from trying to sync</li>
+<li>Slider switches which allow you to tell your device what kind of charger is connected. Select from dedicated charger port, Sony, open circuit, and four different Apple chargers; 500mA, 1A, 2.1A, and 2.5A.</li>
+<li>USB-B and USB-micro-B connectors on the power side</li>
+<li>USB-A on the device side</li>
+</ul>
+<p><strong>Videos</strong>:
+<a class="reference external" href="https://www.youtube.com/watch?v=KMzj8KeqWx8">Video 1</a>
+<a class="reference external" href="https://www.youtube.com/watch?v=p6iHcQJdUy0">Video 2</a></p>
+</div>
+<div class="section" id="gcn-to-n64-adapter">
+<h2>GCN-to-N64 Adapter</h2>
+<p><strong>Source code</strong>:
+<a class="reference external" href="https://www.github.com/Galvant/gcn_to_n64-pcb">Circuit Board</a></p>
+<p><strong>About</strong>: A simple PCB for connecting a Nintendo Gamecube controller into a Nintendo 64 console. The inspiration came from finding the source code to do the protocol conversion on Github, but no matching PCB.</p>
+<p><strong>Videos</strong>:
+<a class="reference external" href="https://www.youtube.com/watch?v=secM9QJF3xM">Video 1</a>
+<a class="reference external" href="https://www.youtube.com/watch?v=Re0rfYlDZiI">Video 2</a></p>
+</div>
+
+        </div>
+    </section>
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+    <p>
+        <strong>About Steven Casagrande</strong><br/>
+        Python lover, hardware builder, powerlifter, and tester of all the things
+    </p>
+</div>
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="http://github.com/scasagrande"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/stevecasagrande"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+                <li class="list-group-item"><a href="https://www.linkedin.com/in/steven-casagrande-633ba533"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+              </ul>
+            </li>
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://www.github.com/Galvant/InstrumentKit" target="_blank">
+                InstrumentKit
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://galvant.ca/" target="_blank">
+                Galvant Industries
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 Steven Casagrande
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>

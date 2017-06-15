@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Automatically Building Docker Containers With Different Base Image Tags - Steven Casagrande</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/articles/automatically-building-docker-containers-with-different-base-image-tags/">
+
+        <meta name="author" content="Steven Casagrande" />
+        <meta name="keywords" content="docker,jenkins,bash" />
+        <meta name="description" content="At work I recently added a Dockerfile to one of our accessory tools, and set it up with Jenkins to build on a nightly basis. This build occurs nightly as opposed to on new master commits to ensure that the resulting container always has the latest versions of all its ..." />
+
+        <meta property="og:site_name" content="Steven Casagrande" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Automatically Building Docker Containers With Different Base Image Tags"/>
+        <meta property="og:url" content="/articles/automatically-building-docker-containers-with-different-base-image-tags/"/>
+        <meta property="og:description" content="At work I recently added a Dockerfile to one of our accessory tools, and set it up with Jenkins to build on a nightly basis. This build occurs nightly as opposed to on new master commits to ensure that the resulting container always has the latest versions of all its ..."/>
+        <meta property="article:published_time" content="2016-04-20" />
+            <meta property="article:section" content="blog" />
+            <meta property="article:tag" content="docker" />
+            <meta property="article:tag" content="jenkins" />
+            <meta property="article:tag" content="bash" />
+            <meta property="article:author" content="Steven Casagrande" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+        <link href="/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Steven Casagrande ATOM Feed"/>
+
+
+
+        <link href="/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Steven Casagrande blog ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+Steven Casagrande            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="/cv">
+                             CV
+                          </a></li>
+                         <li><a href="/hardware">
+                             Hardware
+                          </a></li>
+                         <li><a href="/software">
+                             Software
+                          </a></li>
+                         <li><a href="/media">
+                             Media
+                          </a></li>
+                        <li class="active">
+                            <a href="/category/blog.html">Blog</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/articles/automatically-building-docker-containers-with-different-base-image-tags/"
+                       rel="bookmark"
+                       title="Permalink to Automatically Building Docker Containers With Different Base Image Tags">
+                        Automatically Building Docker Containers With Different Base Image Tags
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2016-04-20T00:00:00-05:00"> Wed 20 April 2016</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="/tag/docker.html">docker</a>
+        /
+	<a href="/tag/jenkins.html">jenkins</a>
+        /
+	<a href="/tag/bash.html">bash</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>At work I recently added a Dockerfile to one of our accessory tools, and set it up with Jenkins to build on a nightly basis. This build occurs nightly as opposed to on new master commits to ensure that the resulting container always has the latest versions of all its dependencies (including node).</p>
+<p>I wrote the Dockerfile such that we were building off of the <a class="reference external" href="https://hub.docker.com/_/node">official node containers</a>. Specifically, off of the latest tag. Here is what I mean:</p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="s"> node:latest</span>
+
+<span class="k">RUN</span> some-stuff
+</pre></div>
+<p>This would ensure that I was always using the latest node version every night, which is exactly what I wanted. Perfect!</p>
+<p>A few weeks later as news of the container made its way around the devs, I was asked to provide a build of the tool that uses the latest LTS node release instead of the latest-latest release. I should be able to do that, no problem. On Docker Hub there is a node tag named <tt class="docutils literal">argon</tt>, which corresponds to the latest build of the current LTS branch (currently node 4.4.3). So my challenge was to provide two identical containers with only the node version changed between them.</p>
+<p>I first considered using the Docker <tt class="docutils literal"><span class="pre">--build-arg</span></tt> flag with a corresponding <tt class="docutils literal">ARG</tt> line in the Dockerfile. Typically this is used in the following way:</p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="s"> ubuntu</span>
+
+ARG myvar
+
+<span class="k">RUN</span> apt-get install <span class="si">${</span><span class="nv">myvar</span><span class="si">}</span>
+</pre></div>
+<p>And then built like so:</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> docker build --build-arg <span class="nv">myvar</span><span class="o">=</span>value -t container-name .
+</pre></div>
+<p>But of course, I wanted to use this build argument in the <tt class="docutils literal">FROM</tt> line. So first I tried this:</p>
+<div class="highlight"><pre><span></span>ARG tag
+
+<span class="k">FROM</span><span class="s"> node:${tag}</span>
+
+<span class="k">RUN</span> some-stuff
+</pre></div>
+<p>But that isn't going to work. The first line in every Dockerfile must be a <tt class="docutils literal">FROM</tt> statement.</p>
+<p>What I instead decided to do (and settled on) was to instead use a file I named <tt class="docutils literal"><span class="pre">Dockerfile-template</span></tt>, and then use the unix tool <tt class="docutils literal">sed</tt> to generate the actual Dockerfile one at a time. Here is what that looked like:</p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="s"> node:TAG</span>
+
+<span class="k">RUN</span> some-stuff
+</pre></div>
+<p>And the scrubbed bash script that was run by Jenkins:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nv">TAGS</span><span class="o">=</span><span class="s2">&quot;latest:argon&quot;</span>
+
+<span class="k">for</span> tag in <span class="si">${</span><span class="nv">tags</span><span class="p">//:/ </span><span class="si">}</span><span class="p">;</span> <span class="k">do</span>
+    sed <span class="s1">&#39;s/TAG/&#39;</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="s1">&#39;/&#39;</span> Dockerfile-template &gt; Dockerfile
+    docker build --no-cache -t container-name:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span> .
+    docker push container-name:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span>
+    docker rmi container-name:<span class="si">${</span><span class="nv">tag</span><span class="si">}</span>
+<span class="k">done</span>
+</pre></div>
+<p>So now I'm providing nightly rebuilds of the internal tool, one with tag <tt class="docutils literal">latest</tt> and one with tag <tt class="docutils literal">argon</tt>, each corresponding to what version of node it was built with!</p>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<div id="aboutme">
+    <p>
+        <strong>About Steven Casagrande</strong><br/>
+        Python lover, hardware builder, powerlifter, and tester of all the things
+    </p>
+</div>
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="http://github.com/scasagrande"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+                <li class="list-group-item"><a href="https://twitter.com/stevecasagrande"><i class="fa fa-twitter-square fa-lg"></i> twitter</a></li>
+                <li class="list-group-item"><a href="https://www.linkedin.com/in/steven-casagrande-633ba533"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+              </ul>
+            </li>
+
+
+
+
+
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://www.github.com/Galvant/InstrumentKit" target="_blank">
+                InstrumentKit
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://galvant.ca/" target="_blank">
+                Galvant Industries
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2017 Steven Casagrande
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>
