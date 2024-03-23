@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://steven.casagrande.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://steven.casagrande.io/theme/pygments/catppuccin.MochaStyle.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://steven.casagrande.io/theme/pygments/sas.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/solid.css">
+
+
+
+
+  <link href="https://steven.casagrande.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Steven Casagrande Atom">
+
+
+
+ 
+
+    <meta name="author" content="Steven Casagrande" />
+    <meta name="description" content="" />
+  <meta property="og:site_name" content="Steven Casagrande"/>
+  <meta property="og:type" content="blog"/>
+  <meta property="og:title" content="Steven Casagrande"/>
+  <meta property="og:description" content=""/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://steven.casagrande.io"/>
+  <meta property="og:image" content="https://steven.casagrande.io/images/me.jpg">
+
+  <title>Steven Casagrande &ndash; Tag aiohttp</title>
+
+
+</head>
+<body >
+
+<aside>
+  <div>
+    <a href="https://steven.casagrande.io/">
+      <img src="https://steven.casagrande.io/images/me.jpg" alt="Steven Casagrande" title="Steven Casagrande">
+    </a>
+
+    <h1>
+      <a href="https://steven.casagrande.io/">Steven Casagrande</a>
+    </h1>
+
+    <p>Lead build systems developer for IBM Quantum</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/about">
+                about
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/projects">
+                Projects
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-github"
+           href="https://github.com/scasagrande"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/steven-casagrande-633ba533"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+
+
+
+<article>
+  <header>
+    <h2><a href="https://steven.casagrande.io/articles/python-requests-and-ssl">Python, Requests, and SSL</a></h2>
+    <p>
+      Posted on Mon 20 June 2016 in <a href="https://steven.casagrande.io/category/blog.html">blog</a>
+
+          &#8226; Tagged with
+              <a href="https://steven.casagrande.io/tag/python.html">python</a>,              <a href="https://steven.casagrande.io/tag/requests.html">requests</a>,              <a href="https://steven.casagrande.io/tag/ssl.html">ssl</a>,              <a href="https://steven.casagrande.io/tag/aynscio.html">aynscio</a>,              <a href="https://steven.casagrande.io/tag/aiohttp.html">aiohttp</a>
+    </p>
+  </header>
+  <div>
+      <div><div class="section" id="ssl-and-synchronous-requests">
+<h2>SSL and Synchronous Requests</h2>
+<p>(scroll down for async requests)</p>
+<p>In Python, the main way in which one makes a web request is via the <tt class="docutils literal">requests</tt> library, like so:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://google.com&quot;</span><span class="p">)</span>
+</pre></div>
+<p>Where in this example Google's website is the route that you are interested in …</p></div></div>
+        <br>
+        <a class="btn"
+           href="https://steven.casagrande.io/articles/python-requests-and-ssl">
+          Continue reading
+        </a>
+  </div>
+</article>
+
+  <div class="pagination">
+  </div>
+
+
+
+<footer>
+<p>&copy; 2024 </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://steven.casagrande.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Steven Casagrande ",
+  "url" : "https://steven.casagrande.io",
+  "image": "https://steven.casagrande.io/images/me.jpg",
+  "description": ""
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://steven.casagrande.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://steven.casagrande.io/theme/pygments/catppuccin.MochaStyle.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://steven.casagrande.io/theme/pygments/sas.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/solid.css">
+
+
+
+
+  <link href="https://steven.casagrande.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Steven Casagrande Atom">
+
+
+
+ 
+
+<meta name="author" content="Steven Casagrande" />
+<meta name="description" content="So the other day at work (seems to be a trend in my posts) I was investigating a problem that we noticed with one of our project&#39;s TravisCI builds. Specifically, we found that a step under script had failed, but the overall build still passed! Very curious problem indeed, and …" />
+<meta name="keywords" content="travis, bash">
+
+
+  <meta property="og:site_name" content="Steven Casagrande"/>
+  <meta property="og:title" content="Travis CI and If Statements"/>
+  <meta property="og:description" content="So the other day at work (seems to be a trend in my posts) I was investigating a problem that we noticed with one of our project&#39;s TravisCI builds. Specifically, we found that a step under script had failed, but the overall build still passed! Very curious problem indeed, and …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://steven.casagrande.io/articles/travis-ci-and-if-statements"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2016-04-28 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://steven.casagrande.io/author/steven-casagrande.html">
+  <meta property="article:section" content="blog"/>
+  <meta property="article:tag" content="travis"/>
+  <meta property="article:tag" content="bash"/>
+  <meta property="og:image" content="https://steven.casagrande.io/images/me.jpg">
+
+  <title>Steven Casagrande &ndash; Travis CI and If Statements</title>
+
+
+</head>
+<body >
+
+<aside>
+  <div>
+    <a href="https://steven.casagrande.io/">
+      <img src="https://steven.casagrande.io/images/me.jpg" alt="Steven Casagrande" title="Steven Casagrande">
+    </a>
+
+    <h1>
+      <a href="https://steven.casagrande.io/">Steven Casagrande</a>
+    </h1>
+
+    <p>Lead build systems developer for IBM Quantum</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/about">
+                about
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/projects">
+                Projects
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-github"
+           href="https://github.com/scasagrande"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/steven-casagrande-633ba533"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="travis-ci-and-if-statements">Travis CI and If Statements</h1>
+    <p>
+      Posted on Thu 28 April 2016 in <a href="https://steven.casagrande.io/category/blog.html">blog</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>So the other day at work (seems to be a trend in my posts) I was investigating a problem that we noticed with one of our project's TravisCI builds. Specifically, we found that a step under <code>script</code> had failed, but the overall build still passed! Very curious problem indeed, and of course needs to be immediately fixed.</p>
+<p>Let's take a look at a similar offending code block:</p>
+<div class="highlight"><pre><span></span><span class="nt">script</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;if</span><span class="nv"> </span><span class="s">[</span><span class="nv"> </span><span class="s">${TRAVIS_SECURE_ENV_VARS}</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">&quot;true&quot;</span><span class="nv"> </span><span class="s">];</span><span class="nv"> </span><span class="s">then</span>
+<span class="w">          </span><span class="s">docker</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">project-container</span><span class="nv"> </span><span class="s">&quot;npm</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">test&quot;;</span>
+<span class="w">          </span><span class="s">docker</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">project-container</span><span class="nv"> </span><span class="s">&quot;npm</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">test:lint&quot;;</span>
+<span class="w">          </span><span class="s">docker-compose</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">ui-tests;</span>
+<span class="w">      </span><span class="s">else</span>
+<span class="w">          </span><span class="s">npm</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">test;</span>
+<span class="w">          </span><span class="s">npm</span><span class="nv"> </span><span class="s">run</span><span class="nv"> </span><span class="s">test:lint;</span>
+<span class="w">      </span><span class="s">fi&#39;</span>
+</pre></div>
+<p>Before we continue, I'd like to point out that I did not write this <code>if</code> block. In fact, here is what I had just weeks before:</p>
+<div class="highlight"><pre><span></span><span class="nt">script</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker run project-container &quot;npm run test&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker run project-container &quot;npm run test:lint&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker-compose run ui-tests</span>
+</pre></div>
+<p>But, because people wanted to be able to work in forks on Github, decisions were made to disable tests to accommodate the workflow. That's another topic for another day. The important part for this story is that the Travis configuration file was changed to accommodate this.</p>
+<p>What I noticed was that an error was being generated during the <code>docker run project-container &quot;npm run test&quot;</code> step. This is a big problem; the build should be flagged as a failure if this happens!</p>
+<p>So I stopped to think for a bit. Travis is clearly checking for non-zero exit codes to determine when to fail or error a build. But the question is, when does this check occur, and why was it working just fine before the <code>if</code> statement was introduced? Well then it hit me. The <code>if</code> block is executed entirely as one command, and the exit code is checked after it is finished.</p>
+<p>With this in mind, I did some quick experimenting. I made two files, each simply with either <code>exit 0;</code> or <code>exit 1;</code> to simulate commands that either pass or fail. Then, I ran the following in my terminal:</p>
+<div class="highlight"><pre><span></span><span class="gp">$ </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span>./fail.sh<span class="p">;</span><span class="w"> </span>./pass.sh<span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+<span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span>
+<span class="go">0</span>
+</pre></div>
+<p>Where <code>$?</code> is the exit code of the last run command. It printed out a <code>0</code>! Ah ha! This is what Travis will see, and so the build passes.</p>
+<p>So there are two main solutions here. We need to make sure that Travis knows to fail the build when something goes wrong. Either your <code>if</code> block needs to be in its own file with <code>set -ev</code> at the top (to stop the script when an error occurs), like so:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nb">set</span><span class="w"> </span>-ev
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="si">${</span><span class="nv">TRAVIS_SECURE_ENV_VARS</span><span class="si">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>project-container<span class="w"> </span><span class="s2">&quot;npm run test&quot;</span><span class="p">;</span>
+<span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>project-container<span class="w"> </span><span class="s2">&quot;npm run test:lint&quot;</span><span class="p">;</span>
+<span class="w">    </span>docker-compose<span class="w"> </span>run<span class="w"> </span>ui-tests<span class="p">;</span>
+<span class="k">else</span>
+<span class="w">    </span>npm<span class="w"> </span>run<span class="w"> </span>test<span class="p">;</span>
+<span class="w">    </span>npm<span class="w"> </span>run<span class="w"> </span>test:lint<span class="p">;</span>
+<span class="k">fi</span>
+
+<span class="nb">exit</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+</pre></div></td></tr></table></div>
+<p>Or, you can directly call the command to terminate the Travis job by changing the block in your <code>.travis.yml</code> file like so:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="si">${</span><span class="nv">TRAVIS_SECURE_ENV_VARS</span><span class="si">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>project-container<span class="w"> </span><span class="s2">&quot;npm run test&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>travis_terminate<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>project-container<span class="w"> </span><span class="s2">&quot;npm run test:lint&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>travis_terminate<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">    </span>docker-compose<span class="w"> </span>run<span class="w"> </span>ui-tests<span class="w"> </span><span class="o">||</span><span class="w"> </span>travis_terminate<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="k">else</span>
+<span class="w">    </span>npm<span class="w"> </span>run<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>travis_terminate<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">    </span>npm<span class="w"> </span>run<span class="w"> </span>test:lint<span class="w"> </span><span class="o">||</span><span class="w"> </span>travis_terminate<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="k">fi</span>
+</pre></div></td></tr></table></div>
+<p>So the moral of the story is, don't put <code>if</code> statements in your <code>.travis.yml</code> file if you care about the exit status.</p>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://steven.casagrande.io/tag/travis.html">travis</a>
+      <a href="https://steven.casagrande.io/tag/bash.html">bash</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>&copy; 2024 </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://steven.casagrande.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Steven Casagrande ",
+  "url" : "https://steven.casagrande.io",
+  "image": "https://steven.casagrande.io/images/me.jpg",
+  "description": ""
+}
+</script>
+</body>
+</html>

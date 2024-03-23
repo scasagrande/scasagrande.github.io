@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://steven.casagrande.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://steven.casagrande.io/theme/pygments/catppuccin.MochaStyle.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://steven.casagrande.io/theme/pygments/sas.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/solid.css">
+
+
+
+
+  <link href="https://steven.casagrande.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Steven Casagrande Atom">
+
+
+
+ 
+
+<meta name="author" content="Steven Casagrande" />
+<meta name="description" content="How to generate a sysroot package for use with the Bazel ruleset toolchains_llvm in order to utilize a hermetic llvm-clang C/C++ compiler toolchain." />
+<meta name="keywords" content="bazel, sysroot, toolchains_llvm">
+
+
+  <meta property="og:site_name" content="Steven Casagrande"/>
+  <meta property="og:title" content="Sysroot package generation for use with toolchains_llvm"/>
+  <meta property="og:description" content="How to generate a sysroot package for use with the Bazel ruleset toolchains_llvm in order to utilize a hermetic llvm-clang C/C++ compiler toolchain."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://steven.casagrande.io/articles/sysroot-generation-toolchains-llvm"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2024-03-23 00:00:00-04:00"/>
+  <meta property="article:modified_time" content="2024-03-23 00:00:00-04:00"/>
+  <meta property="article:author" content="https://steven.casagrande.io/author/steven-casagrande.html">
+  <meta property="article:section" content="bazel"/>
+  <meta property="article:tag" content="bazel"/>
+  <meta property="article:tag" content="sysroot"/>
+  <meta property="article:tag" content="toolchains_llvm"/>
+  <meta property="og:image" content="https://steven.casagrande.io/images/me.jpg">
+
+  <title>Steven Casagrande &ndash; Sysroot package generation for use with toolchains_llvm</title>
+
+
+</head>
+<body >
+
+<aside>
+  <div>
+    <a href="https://steven.casagrande.io/">
+      <img src="https://steven.casagrande.io/images/me.jpg" alt="Steven Casagrande" title="Steven Casagrande">
+    </a>
+
+    <h1>
+      <a href="https://steven.casagrande.io/">Steven Casagrande</a>
+    </h1>
+
+    <p>Lead build systems developer for IBM Quantum</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/about">
+                about
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/projects">
+                Projects
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-github"
+           href="https://github.com/scasagrande"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/steven-casagrande-633ba533"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="sysroot-generation-toolchains-llvm">Sysroot package generation for use with toolchains_llvm</h1>
+    <p>
+      Posted on Sat 23 March 2024 in <a href="https://steven.casagrande.io/category/bazel.html">bazel</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Bazel aims to provide a hermetic environment for your build &amp; test operations (&quot;actions&quot;) to run in. However by default Bazel does not provide a hermetic C / C++ (CC) toolchain. If you would like to learn more about this and why it is important, then I suggest you read <a class="reference external" href="https://blog.aspect.dev/hermetic-c-toolchain">this article by Thulio Ferraz Assis at Aspect</a>.</p>
+<p>Alongside their article, <a class="reference external" href="https://github.com/f0rmiga/gcc-toolchain">they developed a solution</a> to enable a hermetic GCC compiler and associated Linux sysroot package. Their solution is great if you want to use GCC. But if you instead want to use a hermetic llvm-clang compiler toolchain, then we are going to have to make some modifications.</p>
+<p>By the end of this article you will be able generate your own Linux sysroot package and combine it together with llvm-clang in order to provide a hermetic CC toolchain capable of cross-compilation.</p>
+<p>Link to source code: <a class="reference external" href="https://github.com/scasagrande/toolchains_llvm_sysroot">https://github.com/scasagrande/toolchains_llvm_sysroot</a></p>
+<p>Please leave your questions and comments <a class="reference external" href="https://github.com/scasagrande/toolchains_llvm_sysroot/discussions/1">under the discussions tab on the repository</a>.</p>
+<div class="section" id="toolchains-llvm-ruleset">
+<h2>toolchains_llvm ruleset</h2>
+<p>To start with, we are going to use the <a class="reference external" href="https://github.com/bazel-contrib/toolchains_llvm">toolchains_llvm</a> ruleset in order to fetch and setup the actual toolchain. This ruleset allows you to <a class="reference external" href="https://github.com/bazel-contrib/toolchains_llvm?tab=readme-ov-file#sysroots">specify a Bazel target that contains your sysroot package files</a>.</p>
+<p>Before we set it up, you'll need to choose if you're going to use <code>llvm-libc++</code> or if you are going to use <code>libstdc++</code>. The former is the default for the ruleset (when doing native compilation builds), it is the common libc++ implementation for macOS builds, and is included as part of the <a class="reference external" href="https://github.com/llvm/llvm-project/releases">standard llvm packages</a>. The latter, <code>libstdc++</code>, is more common for Linux builds. In both cases we will still require a separate sysroot package in order to provide a hermetic CC toolchain environment. Here I will be using <code>libstdc++</code> for our Linux target platform builds, and <code>libc++</code> for our macOS target platform builds.</p>
+<p>Without a sysroot package, you might use this ruleset to define your CC toolchain as follows. This will enable a CC toolchain for Linux and macOS on both x86_64/amd64 and aarch64/arm64.</p>
+<p><code>WORKSPACE.bazel</code></p>
+<div class="highlight"><pre><span></span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;@bazel_tools//tools/build_defs/repo:http.bzl&quot;</span><span class="p">,</span> <span class="s2">&quot;http_archive&quot;</span><span class="p">)</span>
+
+<span class="n">http_archive</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;toolchains_llvm&quot;</span><span class="p">,</span>
+    <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&quot;e91c4361f99011a54814e1afbe5c436e0d329871146a3cd58c23a2b4afb50737&quot;</span><span class="p">,</span>
+    <span class="n">strip_prefix</span> <span class="o">=</span> <span class="s2">&quot;toolchains_llvm-1.0.0&quot;</span><span class="p">,</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://github.com/bazel-contrib/toolchains_llvm/releases/download/1.0.0/toolchains_llvm-1.0.0.tar.gz&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">load</span><span class="p">(</span><span class="s2">&quot;@toolchains_llvm//toolchain:deps.bzl&quot;</span><span class="p">,</span> <span class="s2">&quot;bazel_toolchain_dependencies&quot;</span><span class="p">)</span>
+
+<span class="n">bazel_toolchain_dependencies</span><span class="p">()</span>
+
+<span class="n">load</span><span class="p">(</span><span class="s2">&quot;@toolchains_llvm//toolchain:rules.bzl&quot;</span><span class="p">,</span> <span class="s2">&quot;llvm_toolchain&quot;</span><span class="p">)</span>
+
+<span class="n">llvm_toolchain</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;llvm_toolchain&quot;</span><span class="p">,</span>
+    <span class="n">llvm_version</span> <span class="o">=</span> <span class="s2">&quot;15.0.2&quot;</span><span class="p">,</span>
+    <span class="n">stdlib</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;linux-x86_64&quot;</span><span class="p">:</span> <span class="s2">&quot;stdc++&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;linux-aarch64&quot;</span><span class="p">:</span> <span class="s2">&quot;stdc++&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">load</span><span class="p">(</span><span class="s2">&quot;@llvm_toolchain//:toolchains.bzl&quot;</span><span class="p">,</span> <span class="s2">&quot;llvm_register_toolchains&quot;</span><span class="p">)</span>
+
+<span class="n">llvm_register_toolchains</span><span class="p">()</span>
+</pre></div>
+<p>or for <a class="reference external" href="https://bazel.build/external/overview#bzlmod">bzlmod</a> enabled projects:</p>
+<p><code>MODULE.bazel</code></p>
+<div class="highlight"><pre><span></span><span class="n">bazel_dep</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;toolchains_llvm&quot;</span><span class="p">,</span> <span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">)</span>
+
+<span class="c1"># Configure and register the toolchain.</span>
+<span class="n">llvm</span> <span class="o">=</span> <span class="n">use_extension</span><span class="p">(</span><span class="s2">&quot;@toolchains_llvm//toolchain/extensions:llvm.bzl&quot;</span><span class="p">,</span> <span class="s2">&quot;llvm&quot;</span><span class="p">)</span>
+<span class="n">llvm</span><span class="o">.</span><span class="n">toolchain</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;llvm_toolchain&quot;</span><span class="p">,</span>
+    <span class="n">llvm_version</span> <span class="o">=</span> <span class="s2">&quot;15.0.2&quot;</span><span class="p">,</span>
+    <span class="n">stdlib</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;linux-x86_64&quot;</span><span class="p">:</span> <span class="s2">&quot;stdc++&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;linux-aarch64&quot;</span><span class="p">:</span> <span class="s2">&quot;stdc++&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">use_repo</span><span class="p">(</span><span class="n">llvm</span><span class="p">,</span> <span class="s2">&quot;llvm_toolchain&quot;</span><span class="p">,</span> <span class="s2">&quot;llvm_toolchain_llvm&quot;</span><span class="p">)</span>
+
+<span class="n">register_toolchains</span><span class="p">(</span><span class="s2">&quot;@llvm_toolchain//:all&quot;</span><span class="p">)</span>
+</pre></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Version 15.0.2 was chosen for this example because <a class="reference external" href="https://github.com/llvm/llvm-project/releases/tag/llvmorg-15.0.2">there exists release packages</a> for all four of our build platform configurations. Choose whatever versions suit your needs. However, I suggest that you ultimately build your own copies and host the packages yourselves.</p>
+</div>
+</div>
+<div class="section" id="sysroot-package-generation">
+<h2>Sysroot package generation</h2>
+<p>Link to source code: <a class="reference external" href="https://github.com/scasagrande/toolchains_llvm_sysroot">https://github.com/scasagrande/toolchains_llvm_sysroot</a></p>
+<p>Now we need to provide a sysroot package in order to ensure that the build is using a consistent version of our system libraries. As a bonus, we will generate a matching package for both x86_64 and aarch64 CPU architectures.</p>
+<p>To programmatically construct these packages, I started with the <a class="reference external" href="https://github.com/f0rmiga/gcc-toolchain/tree/main/sysroot">sysroot generation code in the gcc-toolchain repo</a>. Although its designed to build a sysroot package for that specific toolchain ruleset, we can modify it to meet the needs of <a class="reference external" href="https://github.com/bazel-contrib/toolchains_llvm">toolchains_llvm</a>. It's also already set up to enable the generation of sysroot packages for both x86_64 and aarch64.</p>
+<p>With this starting point, I made the following changes:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Updated the following system libraries to target a Red Hat Enterprise Linux (RHEL) 8 environment</dt>
+<dd><ul class="first last">
+<li>Kernel 4.18</li>
+<li>glibc 2.28</li>
+<li>libstdc++ 10.3</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Updated toolchains used to versions that support building those above libraries</li>
+<li>Removed a bunch of the files that we aren't going to need, such as binaries</li>
+<li>Moved the files around, renamed some folders, and placed everything under a standard <code>/usr</code> layout</li>
+</ul>
+<p>With these changes, you'll have the basics that you need to provide a hermetic CC toolchain to Bazel.</p>
+<p>In my case, I also decided to expand the sysroot package with <code>openssl</code> and <code>cyrus-sasl</code>, copied from a <a class="reference external" href="https://catalog.redhat.com/software/containers/search?build_categories_list=Scratch%20image&amp;p=1&amp;product_listings_names=Red%20Hat%20Universal%20Base%20Image%208">RHEL-UBI 8 container image</a>. Openssl is a very common build dependency and is useful to have in your sysroot. For those of us targeting a RHEL 8 production environment, it can be very helpful to have this specific copy of openssl for FIPS compliance. But we're not going to get into that today, and instead just focus on the fact that we are including these optional libraries in our sysroot package.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your deliverable is an OCI image, you should not be shipping these libraries into your final artifacts. These are just to ensure that they are hermetically available for any Bazel build and test operations, and that we are dynamically linking against these production-like copies. Your base image should already have the exact versions that you need. You may even have regulation compliance requirements where you must use the copies already present in your base image. If you think that this may apply to you, be sure to consult the rest of your team!</p>
+</div>
+<p>So now lets go ahead and build it. These commands will build our two sysroot packages with these extra ssl libraries bundled in, and output them into our current directory.</p>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>./build.sh<span class="w"> </span>x86_64<span class="w"> </span>.<span class="w"> </span>ssl
+$<span class="w"> </span>./build.sh<span class="w"> </span>aarch64<span class="w"> </span>.<span class="w"> </span>ssl
+</pre></div>
+<p>If you want to omit these ssl related packages, then replace <code>ssl</code> with <code>base</code>.</p>
+<p>After some processing time, you will be left with 2 <code>tar.xz</code> files. If you have been following along, the x86_64 file should be approximately 55MB, and the aarch64 file approximately 35MB.</p>
+</div>
+<div class="section" id="using-the-sysroot-package">
+<h2>Using the sysroot package</h2>
+<p>First we need to make the <code>tar.xz</code> files available to Bazel. I have not yet worked with <a class="reference external" href="https://bazel.build/external/overview#bzlmod">bzlmod</a> so I will just be showing you how to use this with the legacy <code>WORKSPACE</code> workflow. It should be straightforward though if you look up the <a class="reference external" href="https://github.com/bazel-contrib/toolchains_llvm/blob/1.0.0/tests/MODULE.bazel#L135">example in the toolchains_llvm repository</a>.</p>
+<p>You'll need to make your sysroot package available somewhere for your team to download, such as in <a class="reference external" href="https://jfrog.com/artifactory/">Artifactory</a>. How you do that is up to you. For testing, you can put in a fake URL and use the <code>--override_repository=</code> CLI argument built into Bazel.</p>
+<p><code>WORKSPACE.bazel</code></p>
+<div class="highlight"><pre><span></span><span class="n">http_archive</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sysroot_linux_x86_64_2_28&quot;</span><span class="p">,</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/sysroot-x86_64-ssl.tar.xz&quot;</span><span class="p">,</span>
+    <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&quot;ABCD1234&quot;</span>
+    <span class="n">build_file</span> <span class="o">=</span> <span class="s2">&quot;//external:BUILD.sysroot.bazel&quot;</span>
+<span class="p">)</span>
+
+<span class="n">http_archive</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sysroot_linux_aarch64_2_28&quot;</span><span class="p">,</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/sysroot-aarch64-ssl.tar.xz&quot;</span><span class="p">,</span>
+    <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&quot;1234ABCD&quot;</span>
+    <span class="n">build_file</span> <span class="o">=</span> <span class="s2">&quot;//external:BUILD.sysroot.bazel&quot;</span>
+<span class="p">)</span>
+</pre></div>
+<p><code>external/BUILD.sysroot.bazel</code></p>
+<div class="highlight"><pre><span></span><span class="n">filegroup</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;sysroot&quot;</span><span class="p">,</span>
+    <span class="n">srcs</span> <span class="o">=</span> <span class="n">glob</span><span class="p">([</span><span class="s2">&quot;**&quot;</span><span class="p">]),</span>
+    <span class="n">visibility</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;//visibility:public&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+<p>And then we just need to update our toolchain definition to use these new sysroot package when building and targeting linux x86_64 and aarch64.</p>
+<div class="highlight"><pre><span></span><span class="n">llvm_toolchain</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;llvm_toolchain&quot;</span><span class="p">,</span>
+    <span class="n">llvm_version</span> <span class="o">=</span> <span class="s2">&quot;15.0.2&quot;</span><span class="p">,</span>
+    <span class="n">stdlib</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;linux-x86_64&quot;</span><span class="p">:</span> <span class="s2">&quot;stdc++&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;linux-aarch64&quot;</span><span class="p">:</span> <span class="s2">&quot;stdc++&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">sysroot</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;linux-x86_64&quot;</span><span class="p">:</span> <span class="s2">&quot;@sysroot_linux_x86_64_2_28//:sysroot&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;linux-aarch64&quot;</span><span class="p">:</span> <span class="s2">&quot;@sysroot_linux_aarch64_2_28//:sysroot&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+<p>Optionally, we can test our build without having uploaded the <code>tar.xz</code>. Start with unpacking the tar file into a folder on your filesystem. Next make a <code>BUILD.bazel</code> file located at the root of this extracted folder (that is, beside the extracted <code>usr/</code> folder) with the contents from your <code>BUILD.sysroot.bazel</code> file.</p>
+<p>Finally, to execute your test, run the following if you are building on a Linux x86_64 machine:</p>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>bazel<span class="w"> </span>build<span class="w"> </span>--override_repository<span class="o">=</span><span class="nv">sysroot_linux_x86_64_2_28</span><span class="o">=</span>/path/to/sysroot-x86_64-ssl<span class="w"> </span>//...
+</pre></div>
+</div>
+<div class="section" id="result">
+<h2>Result</h2>
+<p>In the end you should now be able to build and test targeting linux x86_64 or aarch64, both with native builds or cross compilation, including from macOS!</p>
+<p>But does that mean that you now have a fully hermetic CC build? Well, that is going to depend on the rest of your project. For example, if you have rust dependencies fetched via <a class="reference external" href="https://github.com/bazelbuild/rules_rust">rules_rust</a> , some of them may include <code>build.rs</code> files that perform their own CC compilation that breaks out of the Bazel sandbox, such as <a class="reference external" href="https://github.com/onsails/rust-rdkafka/blob/master/rdkafka-sys/build.rs">rdkafka-sys</a>, <a class="reference external" href="https://github.com/sfackler/rust-openssl/blob/master/openssl-sys/build/main.rs">openssl-sys</a>, or <a class="reference external" href="https://github.com/MaterializeInc/rust-sasl/blob/master/sasl2-sys/build.rs">sasl2-sys</a>. In the future I will cover how best to deal with these cases, while also using our new sysroot packages.</p>
+</div>
+<div class="section" id="feedback">
+<h2>Feedback</h2>
+<p>Please leave your questions and comments <a class="reference external" href="https://github.com/scasagrande/toolchains_llvm_sysroot/discussions/1">in this discussions thread on the repository</a>.</p>
+<p>I can also be reached on the <a class="reference external" href="https://bazelbuild.slack.com">Bazel slack community</a> under my full name.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://steven.casagrande.io/tag/bazel.html">bazel</a>
+      <a href="https://steven.casagrande.io/tag/sysroot.html">sysroot</a>
+      <a href="https://steven.casagrande.io/tag/toolchains_llvm.html">toolchains_llvm</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>&copy; 2024 </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://steven.casagrande.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Steven Casagrande ",
+  "url" : "https://steven.casagrande.io",
+  "image": "https://steven.casagrande.io/images/me.jpg",
+  "description": ""
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://steven.casagrande.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://steven.casagrande.io/theme/pygments/catppuccin.MochaStyle.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://steven.casagrande.io/theme/pygments/sas.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/solid.css">
+
+
+
+
+  <link href="https://steven.casagrande.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Steven Casagrande Atom">
+
+
+
+ 
+
+<meta name="author" content="Steven Casagrande" />
+<meta name="description" content="Over the past few months, the people within my circle of friends (myself included) have started to put more of an emphasis on increasing the code coverage for their own projects. I&#39;d like to take a moment here how a code coverage metric is important, but it should not be …" />
+<meta name="keywords" content="testing">
+
+
+  <meta property="og:site_name" content="Steven Casagrande"/>
+  <meta property="og:title" content="Code Coverage Isn&#39;t Everything"/>
+  <meta property="og:description" content="Over the past few months, the people within my circle of friends (myself included) have started to put more of an emphasis on increasing the code coverage for their own projects. I&#39;d like to take a moment here how a code coverage metric is important, but it should not be …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://steven.casagrande.io/articles/code-coverage-isnt-everything"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2016-04-16 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://steven.casagrande.io/author/steven-casagrande.html">
+  <meta property="article:section" content="blog"/>
+  <meta property="article:tag" content="testing"/>
+  <meta property="og:image" content="https://steven.casagrande.io/images/me.jpg">
+
+  <title>Steven Casagrande &ndash; Code Coverage Isn&#39;t Everything</title>
+
+
+</head>
+<body >
+
+<aside>
+  <div>
+    <a href="https://steven.casagrande.io/">
+      <img src="https://steven.casagrande.io/images/me.jpg" alt="Steven Casagrande" title="Steven Casagrande">
+    </a>
+
+    <h1>
+      <a href="https://steven.casagrande.io/">Steven Casagrande</a>
+    </h1>
+
+    <p>Lead build systems developer for IBM Quantum</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/about">
+                about
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/projects">
+                Projects
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-github"
+           href="https://github.com/scasagrande"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/steven-casagrande-633ba533"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="code-coverage-isnt-everything">Code Coverage Isn't Everything</h1>
+    <p>
+      Posted on Sat 16 April 2016 in <a href="https://steven.casagrande.io/category/blog.html">blog</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Over the past few months, the people within my circle of friends (myself included) have started to put more of an emphasis on increasing the code coverage for their own projects. I'd like to take a moment here how a code coverage metric is important, but it should not be the only goal when writing unit tests.</p>
+<p>For those that are unaware, code coverage is simply a metric that measures the percentage of lines of code that are executed when your unit test framework is run. You can see an example coverage report at the <a class="reference external" href="https://coveralls.io/github/Galvant/InstrumentKit">Coveralls page for InstrumentKit</a>.</p>
+<p>Coverage is a great indicator that you are heading in the correct direction with your tests. After all, if a line of code is ran once in a test environment, that's better than zero! The problem arises when one assumes that is sufficient. The idea is that unit tests should capture all the behaviour of your code, not just touch each line once.</p>
+<p>Alright, lets look at an example of what I'm talking about. A great example is a function that uses ternary expressions (basic <tt class="docutils literal">if</tt> statements compressed into a single line).</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">foobar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
+</pre></div>
+<p>All this function is doing is casting the input to lowercase if the input is a string, else it just returns the input. Not the most useful function in the world, but a good demonstration.</p>
+<p>Now lets say our corresponding tests look like this:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_foobar</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">foobar</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span> <span class="o">==</span> <span class="mi">123</span>
+</pre></div>
+<p>So now if we were to check our code coverage, we'd see that we have 100%! Wow great job! But wait...we haven't actually captured all the behaviour. Someone in the future could change our <tt class="docutils literal">foobar</tt> function to call <tt class="docutils literal">str.upper()</tt>, or not do anything with strings at all. We need some more tests.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_foobar_integer</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">foobar</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span> <span class="o">==</span> <span class="mi">123</span>
+
+<span class="k">def</span> <span class="nf">test_foobar_lower_case_string</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">foobar</span><span class="p">(</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;abc&quot;</span>
+
+<span class="k">def</span> <span class="nf">test_foobar_casts_to_lower</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">foobar</span><span class="p">(</span><span class="s2">&quot;AbCd&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;abcd&quot;</span>
+</pre></div>
+<p>There we go, much better. Even though our code coverage hasn't changed, our tests are in a much better shape. Naturally we can keep adding more (whats the desired behaviour with lists of strings? What about byte strings?) but to show my point this is sufficient.</p>
+<p>Now, this would have been much less of a problem if we had followed Test Driven Development (basically write tests before you write your implementation, yand es this is a huge oversimplification of TDD). But because we're trying to add tests to an existing project after its already been written, we don't get that privilege.</p>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://steven.casagrande.io/tag/testing.html">testing</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>&copy; 2024 </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://steven.casagrande.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Steven Casagrande ",
+  "url" : "https://steven.casagrande.io",
+  "image": "https://steven.casagrande.io/images/me.jpg",
+  "description": ""
+}
+</script>
+</body>
+</html>

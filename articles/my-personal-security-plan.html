@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://steven.casagrande.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://steven.casagrande.io/theme/pygments/catppuccin.MochaStyle.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://steven.casagrande.io/theme/pygments/sas.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://steven.casagrande.io/theme/font-awesome/css/solid.css">
+
+
+
+
+  <link href="https://steven.casagrande.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Steven Casagrande Atom">
+
+
+
+ 
+
+<meta name="author" content="Steven Casagrande" />
+<meta name="description" content="Back on June 5, 2013 I remember pacing back and forth while freaking out all day. I spent the day talking to my good friend Cassandra Granade, who was in a similar state of dismay. At the time we were both in graduate school, she doing her PhD and myself …" />
+<meta name="keywords" content="security, privacy, android, signal, linux">
+
+
+  <meta property="og:site_name" content="Steven Casagrande"/>
+  <meta property="og:title" content="My Personal Security Plan"/>
+  <meta property="og:description" content="Back on June 5, 2013 I remember pacing back and forth while freaking out all day. I spent the day talking to my good friend Cassandra Granade, who was in a similar state of dismay. At the time we were both in graduate school, she doing her PhD and myself …"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://steven.casagrande.io/articles/my-personal-security-plan"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2017-06-15 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://steven.casagrande.io/author/steven-casagrande.html">
+  <meta property="article:section" content="blog"/>
+  <meta property="article:tag" content="security"/>
+  <meta property="article:tag" content="privacy"/>
+  <meta property="article:tag" content="android"/>
+  <meta property="article:tag" content="signal"/>
+  <meta property="article:tag" content="linux"/>
+  <meta property="og:image" content="https://steven.casagrande.io/images/me.jpg">
+
+  <title>Steven Casagrande &ndash; My Personal Security Plan</title>
+
+
+</head>
+<body >
+
+<aside>
+  <div>
+    <a href="https://steven.casagrande.io/">
+      <img src="https://steven.casagrande.io/images/me.jpg" alt="Steven Casagrande" title="Steven Casagrande">
+    </a>
+
+    <h1>
+      <a href="https://steven.casagrande.io/">Steven Casagrande</a>
+    </h1>
+
+    <p>Lead build systems developer for IBM Quantum</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/about">
+                about
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://steven.casagrande.io/projects">
+                Projects
+              </a>
+            </li>
+
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-github"
+           href="https://github.com/scasagrande"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/steven-casagrande-633ba533"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+
+<article class="single">
+  <header>
+      
+    <h1 id="my-personal-security-plan">My Personal Security Plan</h1>
+    <p>
+      Posted on Thu 15 June 2017 in <a href="https://steven.casagrande.io/category/blog.html">blog</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Back on June 5, 2013 I remember pacing back and forth while freaking out all day. I spent the day talking to my good friend <a class="reference external" href="http://www.cgranade.com/">Cassandra Granade</a>, who was in a similar state of dismay. At the time we were both in graduate school, she doing her PhD and myself working on my MSc, both in physics. We poured over all the news of the day, astonished at what we were reading. It honestly felt like some sort of nightmare, where all of the bad plots to Hollywood movies were coming real.</p>
+<p>Of course, this was the day that The Guardian, thanks to the courageous work of Edward Snowden, let the world know that the NSA was operating a variety of programs with the intent of mass surveillance of anyone and everyone. We learned of programs like PRISM and XKeyscore, of the secret courts compelling tech companies to do their bidding, and the widespread infiltration of every level of our modern networked lives.</p>
+<p>Needless to say, we didn't get any work done that day. And that day turned out to only be the tip of the iceberg.</p>
+<p>With all this information I became overwhelmed. As the days went on, more news kept coming out, and I just felt helpless.</p>
+<p>I write this now 4 years later. Since then, people much smarter than me have actually tried to do something about this. The fantastic people at the EFF and Open Whisper Systems have continued to put out free open-source software and text guides to help people protect their privacy and digital security. Over the last few months I've been thinking about this more, and now with the most recent <a class="reference external" href="https://wikileaks.org/ciav7p1/">release by Wikileaks regarding the CIA</a>, I've been doing my research to figure out what I can do to help myself. In this article, I will present in no particular order a list of things that I plan on doing now and in the near future.</p>
+<div class="section" id="request-my-contacts-move-to-using-signal">
+<h2>Request my contacts move to using Signal</h2>
+<p>Several years ago I installed the end-to-end encryption communications software, Signal. The problem I experienced was exactly what you might expect; the inertia involved with getting people to switch messaging systems proved difficult. It wasn't until Nov 25, 2015 on my birthday that I received a message on Signal from a friend who I had not previously discussed Signal with. How exciting! This continued to pickup throughout 2016 with more friends moving to the platform, mostly thanks to a few of them pushing for people to switch.</p>
+<p>Now its my turn. A lot of people that I communicate with are now on Signal, which is fantastic. The remainders though, are from different circles of friends. Here are the groups I've identified:</p>
+<ul class="simple">
+<li>Family. Not sure if I'll be able to win this one, but its worth trying.</li>
+<li>Old friends. This shouldn't be too much of an issue. We just primarily use SMS because that's what we've always used.</li>
+<li>Warcraft guildmates. My guess is this will be half easy and half a pain. Some people will do it, some won't care, and some I'll need to hold their hand through the process.</li>
+</ul>
+</div>
+<div class="section" id="review-permissions-and-settings-for-all-apps-on-my-phone">
+<h2>Review permissions and settings for all apps on my phone</h2>
+<p>This is something that I try to do on a regular basis, but I need to take the time to do a once-over for everything. This includes general app settings as well as Android permissions.</p>
+<p>The main prompt for this was my recent discovery that Google, through my cell phone, has been keeping a record of every single location I had gone since my first Android phone! I had honestly thought I had turned that off, but it turns out that was a different-but-similar tracking feature. I turned it off and purged the complete history, but it does make me wonder what else I've missed.</p>
+</div>
+<div class="section" id="enable-full-disk-encryption-on-my-phone">
+<h2>Enable full disk encryption on my phone</h2>
+<p>Here's a easy one. I need to enable fill disk encryption on my cell phone and switch to using a strong unlock passcode. I'm not going to lie, I should have done this ages ago, but I was lazy.</p>
+</div>
+<div class="section" id="update-my-laptop-os">
+<h2>Update my laptop OS</h2>
+<p>You would think that I'd always be on the latest and greatest OS version. But nope, not the case. I'm currently running Ubuntu GNOME 15.10 on my Thinkpad T440. This stopped being supported months ago, but I'm always hesitant to update my distribution instead of doing a clean install. I need to make sure I'm using supported software to help protect myself from security vulnerabilities.</p>
+</div>
+<div class="section" id="continue-to-pair-down-on-non-foss">
+<h2>Continue to pair down on Non-FOSS</h2>
+<p>I've always been an advocate for Free Open Source Software (FOSS). I do my best to release my own projects under FOSS licences, and I try to encourage others to use FOSS solutions when they can. There are a few areas in my own life where I could do a little better. The one that sticks out in my head the most is Adobe Lightroom vs Darktable.</p>
+<p>I should also re-evaluate my usage of web-based software, and attempt to use more open alternatives where I can. I'll first have to take a better stock of my commonly used webapps and see where I can go from there.</p>
+</div>
+<div class="section" id="switch-back-to-using-firefox">
+<h2>Switch back to using Firefox</h2>
+<p>I'm not sure exactly when it happened, but at some point I went from a happy Firefox user of many years, to primarily a Chrome user. My guess is the convenience of being able to log into my Google account directly into the browser proved to be too tempting.</p>
+<p>While a significant portion of <a class="reference external" href="https://www.chromium.org/">Chrome is open source</a>, I believe that at the end of the day, the <a class="reference external" href="https://www.mozilla.org">Mozilla Foundation</a> is a greater force for good in the FOSS community. At the end of the day, they make a great product, and ensuring that there is a counter to Google's corporate interests is important for all of us.</p>
+<p>My main concern with switching to Firefox is how poorly the browser has performed in exploit competitions. I even recall how Firefox was excluded from some due to how easy it was to exploit. Perhaps I first need to do some research and see how far Firefox has come in this department. Maybe I actually should be switching to the <a class="reference external" href="https://github.com/Eloston/ungoogled-chromium">ungoogled-chromium project</a>. Time will tell!</p>
+</div>
+<div class="section" id="set-default-search-to-duckduckgo">
+<h2>Set Default search to Duckduckgo</h2>
+<p>This will probably be the hardest habit to break. I've been instinctively going to google.com for my web search needs for a very long time. I honestly can't remember what I used before. I recall using a variety of search engines in those early days. Unfortunately these days, everything you do online (and in a growing number of cases, in meatspace) is tracked and tied to a growing profile of you.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://steven.casagrande.io/tag/security.html">security</a>
+      <a href="https://steven.casagrande.io/tag/privacy.html">privacy</a>
+      <a href="https://steven.casagrande.io/tag/android.html">android</a>
+      <a href="https://steven.casagrande.io/tag/signal.html">signal</a>
+      <a href="https://steven.casagrande.io/tag/linux.html">linux</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>&copy; 2024 </p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://steven.casagrande.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Steven Casagrande ",
+  "url" : "https://steven.casagrande.io",
+  "image": "https://steven.casagrande.io/images/me.jpg",
+  "description": ""
+}
+</script>
+</body>
+</html>
