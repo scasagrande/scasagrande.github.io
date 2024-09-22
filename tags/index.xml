@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Steven Casagrande</title>
+    <link>https://steven.casagrande.io/tags/</link>
+    <description>Recent content in Tags on Steven Casagrande</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 08 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://steven.casagrande.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bazel</title>
+      <link>https://steven.casagrande.io/tags/bazel/</link>
+      <pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/bazel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sysroot</title>
+      <link>https://steven.casagrande.io/tags/sysroot/</link>
+      <pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/sysroot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Toolchains_llvm</title>
+      <link>https://steven.casagrande.io/tags/toolchains_llvm/</link>
+      <pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/toolchains_llvm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://steven.casagrande.io/tags/python/</link>
+      <pubDate>Mon, 20 Jun 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bash</title>
+      <link>https://steven.casagrande.io/tags/bash/</link>
+      <pubDate>Thu, 28 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/bash/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Travis</title>
+      <link>https://steven.casagrande.io/tags/travis/</link>
+      <pubDate>Thu, 28 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/travis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>https://steven.casagrande.io/tags/docker/</link>
+      <pubDate>Fri, 22 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jenkins</title>
+      <link>https://steven.casagrande.io/tags/jenkins/</link>
+      <pubDate>Fri, 22 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/jenkins/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Testing</title>
+      <link>https://steven.casagrande.io/tags/testing/</link>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/testing/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

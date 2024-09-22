@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Testing on Steven Casagrande</title>
+    <link>https://steven.casagrande.io/tags/testing/</link>
+    <description>Recent content in Testing on Steven Casagrande</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 16 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://steven.casagrande.io/tags/testing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Code Coverage Isn&#39;t Everything</title>
+      <link>https://steven.casagrande.io/posts/2016/code-coverage-isnt-everything/</link>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/code-coverage-isnt-everything/</guid>
+      <description>&lt;p&gt;Over the past few months, the people within my circle of friends (myself included) have started to put more of an emphasis on increasing the code coverage for their own projects. I&amp;rsquo;d like to take a moment here how a code coverage metric is important, but it should not be the only goal when writing unit tests.&lt;/p&gt;&#xA;&lt;p&gt;For those that are unaware, code coverage is simply a metric that measures the percentage of lines of code that are executed when your unit test framework is run. You can see an example coverage report at the &lt;a href=&#34;https://app.codecov.io/gh/instrumentkit/InstrumentKit&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Codecov page for InstrumentKit&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

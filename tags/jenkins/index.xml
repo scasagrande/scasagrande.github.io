@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jenkins on Steven Casagrande</title>
+    <link>https://steven.casagrande.io/tags/jenkins/</link>
+    <description>Recent content in Jenkins on Steven Casagrande</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 07 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://steven.casagrande.io/tags/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Remember to Pull Your Base Docker Images Before Building</title>
+      <link>https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/</link>
+      <pubDate>Fri, 22 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/</guid>
+      <description>&lt;div class=&#34;notice warning&#34;&gt;&#xA;  &lt;div class=&#34;notice-title&#34;&gt;&#xA;    &lt;i class=&#34;fa-solid fa-exclamation-triangle&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;Warning&#xA;  &lt;/div&gt;&#xA;  &lt;div class=&#34;notice-content&#34;&gt;&lt;p&gt;This post was written in 2016 and the ecosystem has matured much since then.&lt;/p&gt;&#xA;&lt;p&gt;Proceed with caution!&lt;/p&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building &lt;a href=&#34;https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/&#34; &gt;in my last article&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Automatically Building Docker Containers With Different Base Image Tags</title>
+      <link>https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/</guid>
+      <description>&lt;div class=&#34;notice warning&#34;&gt;&#xA;  &lt;div class=&#34;notice-title&#34;&gt;&#xA;    &lt;i class=&#34;fa-solid fa-exclamation-triangle&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;Warning&#xA;  &lt;/div&gt;&#xA;  &lt;div class=&#34;notice-content&#34;&gt;&lt;p&gt;This post was written in 2016 and the ecosystem has matured much since then.&lt;/p&gt;&#xA;&lt;p&gt;Proceed with caution!&lt;/p&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;At work I recently added a Dockerfile to one of our accessory tools, and set it up with Jenkins to build on a nightly basis. This build occurs nightly as opposed to on new master commits to ensure that the resulting container always has the latest versions of all its dependencies (including node).&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

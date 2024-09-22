@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Toolchains_llvm on Steven Casagrande</title>
+    <link>https://steven.casagrande.io/tags/toolchains_llvm/</link>
+    <description>Recent content in Toolchains_llvm on Steven Casagrande</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 08 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://steven.casagrande.io/tags/toolchains_llvm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sysroot package generation for use with toolchains_llvm</title>
+      <link>https://steven.casagrande.io/posts/2024/sysroot-generation-toolchains-llvm/</link>
+      <pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2024/sysroot-generation-toolchains-llvm/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://bazel.build/&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bazel&lt;/a&gt; aims to provide a hermetic environment for your build &amp;amp; test operations (&amp;ldquo;actions&amp;rdquo;) to run in. However by default Bazel does not provide a hermetic C / C++ (CC) toolchain. If you would like to learn more about this and why it is important, then I suggest you read &lt;a href=&#34;https://blog.aspect.dev/hermetic-c-toolchain&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this article by Thulio Ferraz Assis at Aspect&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Alongside their article, &lt;a href=&#34;https://github.com/f0rmiga/gcc-toolchain&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;they developed a solution&lt;/a&gt; to enable a hermetic GCC compiler and associated Linux sysroot package. Their solution is great if you want to use GCC. But if you instead want to use a hermetic &lt;code&gt;llvm-clang&lt;/code&gt; compiler toolchain, then we are going to have to make some modifications.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

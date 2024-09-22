@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Steven Casagrande</title>
+    <link>https://steven.casagrande.io/posts/</link>
+    <description>Recent content in Posts on Steven Casagrande</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 08 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://steven.casagrande.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Sysroot package generation for use with toolchains_llvm</title>
+      <link>https://steven.casagrande.io/posts/2024/sysroot-generation-toolchains-llvm/</link>
+      <pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2024/sysroot-generation-toolchains-llvm/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://bazel.build/&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bazel&lt;/a&gt; aims to provide a hermetic environment for your build &amp;amp; test operations (&amp;ldquo;actions&amp;rdquo;) to run in. However by default Bazel does not provide a hermetic C / C++ (CC) toolchain. If you would like to learn more about this and why it is important, then I suggest you read &lt;a href=&#34;https://blog.aspect.dev/hermetic-c-toolchain&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this article by Thulio Ferraz Assis at Aspect&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Alongside their article, &lt;a href=&#34;https://github.com/f0rmiga/gcc-toolchain&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;they developed a solution&lt;/a&gt; to enable a hermetic GCC compiler and associated Linux sysroot package. Their solution is great if you want to use GCC. But if you instead want to use a hermetic &lt;code&gt;llvm-clang&lt;/code&gt; compiler toolchain, then we are going to have to make some modifications.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My Personal Security Plan</title>
+      <link>https://steven.casagrande.io/posts/2017/my-personal-security-plan/</link>
+      <pubDate>Thu, 15 Jun 2017 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2017/my-personal-security-plan/</guid>
+      <description>&lt;p&gt;Back on June 5, 2013, I remember pacing back and forth while freaking out all day. I spent the day talking to my good friend &lt;a href=&#34;http://www.cgranade.com/&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cassandra Granade&lt;/a&gt;, who was in a similar state of dismay. At the time we were both in graduate school, him doing his PhD and myself working on my M.Sc., both in physics. We poured over all the news of the day, astonished at what we were reading. It honestly felt like some sort of nightmare, where all the bad plots to Hollywood movies were coming real.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Python, Requests, and SSL</title>
+      <link>https://steven.casagrande.io/posts/2016/python-requests-and-ssl/</link>
+      <pubDate>Mon, 20 Jun 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/python-requests-and-ssl/</guid>
+      <description>&lt;div class=&#34;notice warning&#34;&gt;&#xA;  &lt;div class=&#34;notice-title&#34;&gt;&#xA;    &lt;i class=&#34;fa-solid fa-exclamation-triangle&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;Warning&#xA;  &lt;/div&gt;&#xA;  &lt;div class=&#34;notice-content&#34;&gt;&lt;p&gt;This post was written in 2016 when &lt;code&gt;asyncio&lt;/code&gt; was the highlight feature in the recently released Python 3.5.&lt;/p&gt;&#xA;&lt;p&gt;There are probably much better ways to handle this now. Proceed with caution!&lt;/p&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;h2 id=&#34;ssl-and-synchronous-requests&#34;&gt;&#xA;  SSL and Synchronous Requests&#xA;  &lt;a class=&#34;heading-link&#34; href=&#34;#ssl-and-synchronous-requests&#34;&gt;&#xA;    &lt;i class=&#34;fa-solid fa-link&#34; aria-hidden=&#34;true&#34; title=&#34;Link to heading&#34;&gt;&lt;/i&gt;&#xA;    &lt;span class=&#34;sr-only&#34;&gt;Link to heading&lt;/span&gt;&#xA;  &lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;(scroll down for async requests)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Travis CI and If Statements</title>
+      <link>https://steven.casagrande.io/posts/2016/travis-ci-and-if-statements/</link>
+      <pubDate>Thu, 28 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/travis-ci-and-if-statements/</guid>
+      <description>&lt;p&gt;So the other day at work (seems to be a trend in my posts) I was investigating a problem that we noticed with one of our project&amp;rsquo;s TravisCI builds. Specifically, we found that a step under &lt;code&gt;script&lt;/code&gt; had failed, but the overall build still passed! Very curious problem indeed, and of course needs to be immediately fixed.&lt;/p&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s take a look at a similar offending code block:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;script&lt;/span&gt;:&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;if [ ${TRAVIS_SECURE_ENV_VARS} = &amp;#34;true&amp;#34; ]; then&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          docker run project-container &amp;#34;npm run test&amp;#34;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          docker run project-container &amp;#34;npm run test:lint&amp;#34;;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          docker-compose run ui-tests;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      else&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          npm run test;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;          npm run test:lint;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;      fi&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pr</description>
+    </item>
+    <item>
+      <title>Remember to Pull Your Base Docker Images Before Building</title>
+      <link>https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/</link>
+      <pubDate>Fri, 22 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/</guid>
+      <description>&lt;div class=&#34;notice warning&#34;&gt;&#xA;  &lt;div class=&#34;notice-title&#34;&gt;&#xA;    &lt;i class=&#34;fa-solid fa-exclamation-triangle&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;Warning&#xA;  &lt;/div&gt;&#xA;  &lt;div class=&#34;notice-content&#34;&gt;&lt;p&gt;This post was written in 2016 and the ecosystem has matured much since then.&lt;/p&gt;&#xA;&lt;p&gt;Proceed with caution!&lt;/p&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building &lt;a href=&#34;https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/&#34; &gt;in my last article&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Automatically Building Docker Containers With Different Base Image Tags</title>
+      <link>https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/</guid>
+      <description>&lt;div class=&#34;notice warning&#34;&gt;&#xA;  &lt;div class=&#34;notice-title&#34;&gt;&#xA;    &lt;i class=&#34;fa-solid fa-exclamation-triangle&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;Warning&#xA;  &lt;/div&gt;&#xA;  &lt;div class=&#34;notice-content&#34;&gt;&lt;p&gt;This post was written in 2016 and the ecosystem has matured much since then.&lt;/p&gt;&#xA;&lt;p&gt;Proceed with caution!&lt;/p&gt;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;At work I recently added a Dockerfile to one of our accessory tools, and set it up with Jenkins to build on a nightly basis. This build occurs nightly as opposed to on new master commits to ensure that the resulting container always has the latest versions of all its dependencies (including node).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Code Coverage Isn&#39;t Everything</title>
+      <link>https://steven.casagrande.io/posts/2016/code-coverage-isnt-everything/</link>
+      <pubDate>Sat, 16 Apr 2016 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2016/code-coverage-isnt-everything/</guid>
+      <description>&lt;p&gt;Over the past few months, the people within my circle of friends (myself included) have started to put more of an emphasis on increasing the code coverage for their own projects. I&amp;rsquo;d like to take a moment here how a code coverage metric is important, but it should not be the only goal when writing unit tests.&lt;/p&gt;&#xA;&lt;p&gt;For those that are unaware, code coverage is simply a metric that measures the percentage of lines of code that are executed when your unit test framework is run. You can see an example coverage report at the &lt;a href=&#34;https://app.codecov.io/gh/instrumentkit/InstrumentKit&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Codecov page for InstrumentKit&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Compiling Arduino Caterina with New VID/PID</title>
+      <link>https://steven.casagrande.io/posts/2014/compiling-arduino-caterina-with-new-vidpid/</link>
+      <pubDate>Wed, 19 Feb 2014 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2014/compiling-arduino-caterina-with-new-vidpid/</guid>
+      <description>How to compile a custom Arduino Caterina bootloader</description>
+    </item>
+  </channel>
+</rss>

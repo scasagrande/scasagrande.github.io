@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Remember to Pull Your Base Docker Images Before Building · Steven Casagrande
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Steven Casagrande">
+<meta name="description" content="
+  
+    Warning
+  
+  This post was written in 2016 and the ecosystem has matured much since then.
+Proceed with caution!
+
+
+At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building in my last article.">
+<meta name="keywords" content="blog,developer,personal">
+<meta name="fediverse:creator" content="" />
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Remember to Pull Your Base Docker Images Before Building">
+  <meta name="twitter:description" content=" Warning This post was written in 2016 and the ecosystem has matured much since then.
+Proceed with caution!
+At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building in my last article.">
+
+<meta property="og:url" content="https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/">
+  <meta property="og:site_name" content="Steven Casagrande">
+  <meta property="og:title" content="Remember to Pull Your Base Docker Images Before Building">
+  <meta property="og:description" content=" Warning This post was written in 2016 and the ecosystem has matured much since then.
+Proceed with caution!
+At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building in my last article.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2016-04-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2016-04-22T00:00:00+00:00">
+    <meta property="article:tag" content="Docker">
+    <meta property="article:tag" content="Jenkins">
+
+
+
+
+<link rel="canonical" href="https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.07092c1350ffd254998dc43a44ae96e617d14af4df4602626878df89189c5e1a.css" integrity="sha256-BwksE1D/0lSZjcQ6RK6W5hfRSvTfRgJiaHjfiRicXho=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-dark">
+  
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="https://steven.casagrande.io/">
+      Steven Casagrande
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Posts</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/bazel">Bazel</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://steven.casagrande.io/posts/2016/remember-to-pull-your-base-docker-images-before-building/">
+              Remember to Pull Your Base Docker Images Before Building
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2016-04-22T00:00:00Z">
+                April 22, 2016
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/docker/">Docker</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/jenkins/">Jenkins</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <div class="notice warning">
+  <div class="notice-title">
+    <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>Warning
+  </div>
+  <div class="notice-content"><p>This post was written in 2016 and the ecosystem has matured much since then.</p>
+<p>Proceed with caution!</p></div>
+</div>
+
+<p>At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building <a href="https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/" >in my last article</a>.</p>
+<p>After making the changes that I mentioned in that article, I noticed that the resulting containers for <code>argon</code> were having no issues, but builds of our app using <code>latest</code> were having issues finding a package. So I built our app container locally and I dived in to see what was wrong.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run --rm -i -t --entrypoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span> container-name
+</span></span></code></pre></div><p>This let me get a prompt inside the container to take a look at what the problem was. First I looked inside the <code>node_modules</code> folder to see if the package was messed up. What I instead noticed was that the container was missing a bunch of our dependencies! Then I got suspicious&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ node --version
+</span></span><span style="display:flex;"><span>4.1.2
+</span></span></code></pre></div><p>What the fuck. This should be <code>5.10.1</code></p>
+<p>So I re-triggered the Jenkins job, blew everything away locally and re-pulled the <code>baseimage:latest</code> that Jenkins just built.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run --rm -i -t --entrypoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span> baseimage:latest
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span># node --version
+</span></span><span style="display:flex;"><span>4.1.2
+</span></span></code></pre></div><p>FUCK</p>
+<p>So I check the Jenkins build log. Yes, it correctly spits out <code>FROM node:latest</code> when building the image. It pushes everything correctly. No errors, no typos.</p>
+<p>So I explicitly compare what I was running before in the Dockerfile to what I was running now. Before it was actually this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:5</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>And now its:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:latest</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Currently, those point to the same image on Docker hub. It was at this point though that I realised what was going on. At some point months ago someone on this Jenkins box did a <code>docker pull node</code>. Then at build time, when docker read the <code>FROM node:latest</code> line, it would check locally, see the image, and just use that.</p>
+<p>This wasn&rsquo;t a problem before because <code>FROM node:5</code> would look locally, but not see anything tagged <code>node:5</code>. It would then pull it from Docker Hub, but not save the tag on the server! Thus, every time it ran it would re-pull the latest 5 release container.</p>
+<p>So the solution? Be explicit in what your project needs in your automated builds. Pull your base images before attempting to use them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>TAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latest:argon&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> tag in <span style="color:#e6db74">${</span>TAGS//:/ <span style="color:#e6db74">}</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    sed <span style="color:#e6db74">&#39;s/TAG/&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>tag<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;/&#39;</span> Dockerfile-template &gt; Dockerfile
+</span></span><span style="display:flex;"><span>    docker pull node:<span style="color:#e6db74">${</span>tag<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    docker build --no-cache -t container-name:<span style="color:#e6db74">${</span>tag<span style="color:#e6db74">}</span> .
+</span></span><span style="display:flex;"><span>    docker push container-name:<span style="color:#e6db74">${</span>tag<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span>    docker rmi container-name:<span style="color:#e6db74">${</span>tag<span style="color:#e6db74">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2024
+     Steven Casagrande 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>
