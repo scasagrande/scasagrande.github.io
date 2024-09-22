@@ -24,7 +24,7 @@ script:
           npm run test;
           npm run test:lint;
       fi&#39;
-">
+Before we continue, I&rsquo;d like to point out that I did not write this if block. In fact, here is what I had just weeks before:">
 <meta name="keywords" content="blog,developer,personal">
 <meta name="fediverse:creator" content="" />
 
@@ -33,14 +33,14 @@ script:
   <meta name="twitter:title" content="Travis CI and If Statements">
   <meta name="twitter:description" content="So the other day at work (seems to be a trend in my posts) I was investigating a problem that we noticed with one of our project’s TravisCI builds. Specifically, we found that a step under script had failed, but the overall build still passed! Very curious problem indeed, and of course needs to be immediately fixed.
 Let’s take a look at a similar offending code block:
-script: - &#39;if [ ${TRAVIS_SECURE_ENV_VARS} = &#34;true&#34; ]; then docker run project-container &#34;npm run test&#34;; docker run project-container &#34;npm run test:lint&#34;; docker-compose run ui-tests; else npm run test; npm run test:lint; fi&#39; ">
+script: - &#39;if [ ${TRAVIS_SECURE_ENV_VARS} = &#34;true&#34; ]; then docker run project-container &#34;npm run test&#34;; docker run project-container &#34;npm run test:lint&#34;; docker-compose run ui-tests; else npm run test; npm run test:lint; fi&#39; Before we continue, I’d like to point out that I did not write this if block. In fact, here is what I had just weeks before:">
 
 <meta property="og:url" content="https://steven.casagrande.io/posts/2016/travis-ci-and-if-statements/">
   <meta property="og:site_name" content="Steven Casagrande">
   <meta property="og:title" content="Travis CI and If Statements">
   <meta property="og:description" content="So the other day at work (seems to be a trend in my posts) I was investigating a problem that we noticed with one of our project’s TravisCI builds. Specifically, we found that a step under script had failed, but the overall build still passed! Very curious problem indeed, and of course needs to be immediately fixed.
 Let’s take a look at a similar offending code block:
-script: - &#39;if [ ${TRAVIS_SECURE_ENV_VARS} = &#34;true&#34; ]; then docker run project-container &#34;npm run test&#34;; docker run project-container &#34;npm run test:lint&#34;; docker-compose run ui-tests; else npm run test; npm run test:lint; fi&#39; ">
+script: - &#39;if [ ${TRAVIS_SECURE_ENV_VARS} = &#34;true&#34; ]; then docker run project-container &#34;npm run test&#34;; docker run project-container &#34;npm run test:lint&#34;; docker-compose run ui-tests; else npm run test; npm run test:lint; fi&#39; Before we continue, I’d like to point out that I did not write this if block. In fact, here is what I had just weeks before:">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
