@@ -1,0 +1,46 @@
+baseURL = 'https://steven.casagrande.io/'
+languageCode = 'en-us'
+title = 'Steven Casagrande'
+theme = "hugo-coder"
+
+#sectionPagesMenu = 'main'
+
+[params]
+author = "Steven Casagrande"
+# license = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA-4.0</a>'
+description = "Steven Casagrande's personal website"
+keywords = "blog,developer,personal"
+info = ["Lead build systems developer for IBM Quantum"]
+avatarURL = "images/me.jpg"
+colorScheme = "dark"
+hideColorSchemeToggle = true
+
+[[params.social]]
+name = "Github"
+icon = "fa-brands fa-github fa-2x"
+weight = 1
+url = "https://github.com/scasagrande"
+
+[[params.social]]
+name = "LinkedIn"
+icon = "fa-brands fa-linkedin fa-2x"
+weight = 4
+url = "https://www.linkedin.com/in/steven-casagrande-633ba533"
+
+[languages.en]
+languageName = ":en:"
+
+[[languages.en.menu.main]]
+name = "Posts"
+weight = 1
+url = "posts/"
+
+[[languages.en.menu.main]]
+name = "Bazel"
+weight = 2
+url = "categories/bazel"
+
+[[languages.en.menu.main]]
+name = "About"
+weight = 3
+url = "about/"
