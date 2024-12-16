@@ -6,8 +6,29 @@
     <description>Recent content in Tags on Steven Casagrande</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://steven.casagrande.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Compression</title>
+      <link>https://steven.casagrande.io/tags/compression/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/compression/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Xz</title>
+      <link>https://steven.casagrande.io/tags/xz/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/xz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zst</title>
+      <link>https://steven.casagrande.io/tags/zst/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/zst/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Llvm</title>
       <link>https://steven.casagrande.io/tags/llvm/</link>

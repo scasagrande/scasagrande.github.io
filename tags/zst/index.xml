@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zst on Steven Casagrande</title>
+    <link>https://steven.casagrande.io/tags/zst/</link>
+    <description>Recent content in Zst on Steven Casagrande</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://steven.casagrande.io/tags/zst/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prefer ZST compression over XZ for use with Bazel</title>
+      <link>https://steven.casagrande.io/posts/2024/prefer-zst-over-xz/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2024/prefer-zst-over-xz/</guid>
+      <description>&lt;p&gt;Earlier this year, I was profiling our Bazel builds looking for any easy wins to speed up CI. One bottleneck I found was the decompression of fetched archives that were compressed with xz.&lt;/p&gt;&#xA;&lt;p&gt;Before starting this work I already knew that decompressing our &lt;a href=&#34;https://steven.casagrande.io/posts/2024/building-macos-llvm-package/&#34; &gt;pre-built llvm toolchain&lt;/a&gt; and &lt;a href=&#34;https://steven.casagrande.io/posts/2024/sysroot-generation-toolchains-llvm/&#34; &gt;sysroot package&lt;/a&gt; took a non-trivial amount of time. But with the full profiling data in hand I was able to see exactly how much time we were spending in CI on fetch vs decompression, how many tasks were waiting, and if there were any other decompression tasks taking a non-trivial amount of time.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
