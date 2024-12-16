@@ -17,7 +17,7 @@ title = 'about me'
 Nov 2023 - Current
 
 - Moved to a new role as lead build systems developer to focus full-time on the build infrastructure.
-- Continued to improve and maintain the bazel build system.
+- Continued to improve and maintain the bazel build system. This solid foundation allowed several teams to rapidly and confidently test, integrate, and deploy our generation-3 runtime code, culminating in our impressive [CLOPs performance improvement announcement as part of QDC 2024](https://www.ibm.com/quantum/blog/qdc-2024).
 - Ran feedback sessions with developers to better understand their pain points. Then using contradiction analysis I provided detailed plans on what the path forward would be.
 
 ## Senior Test Developer - [IBM Quantum](https://www.ibm.com/quantum)
