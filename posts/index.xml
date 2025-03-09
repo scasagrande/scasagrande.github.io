@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Steven Casagrande</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Mar 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://steven.casagrande.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing bazel-examples</title>
+      <link>https://steven.casagrande.io/posts/2025/introducing-bazel-examples/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/posts/2025/introducing-bazel-examples/</guid>
+      <description>&lt;p&gt;In an effort to provide a consolidated location for all my current and future bazel-related examples, I have created a new centralized location for that on GitHub: &lt;a href=&#34;https://github.com/scasagrande/bazel-examples&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scasagrande/bazel-examples&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;The intention here is to provide something similar to the &lt;a href=&#34;https://github.com/aspect-build/bazel-examples&#34;  class=&#34;external-link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Aspect Build bazel-examples repository&lt;/a&gt;, where others can come and find reference implementations for various common tasks. Some examples might be fully runnable bazel modules, while some might be bazel-adjacent code. As I include more I will aim to make a short corresponding post here.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Prefer ZST compression over XZ for use with Bazel</title>
       <link>https://steven.casagrande.io/posts/2024/prefer-zst-over-xz/</link>

@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Steven Casagrande</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Mar 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://steven.casagrande.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Examples</title>
+      <link>https://steven.casagrande.io/tags/examples/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://steven.casagrande.io/tags/examples/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Compression</title>
       <link>https://steven.casagrande.io/tags/compression/</link>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+  Introducing bazel-examples · Steven Casagrande
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Steven Casagrande">
+<meta name="description" content="Introducing scasagrande/bazel-examples, a git repository hosting a variety of Bazel related examples for public reference.">
+<meta name="keywords" content="blog,developer,personal">
+<meta name="fediverse:creator" content="" />
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Introducing bazel-examples">
+  <meta name="twitter:description" content="Introducing scasagrande/bazel-examples, a git repository hosting a variety of Bazel related examples for public reference.">
+
+<meta property="og:url" content="https://steven.casagrande.io/posts/2025/introducing-bazel-examples/">
+  <meta property="og:site_name" content="Steven Casagrande">
+  <meta property="og:title" content="Introducing bazel-examples">
+  <meta property="og:description" content="Introducing scasagrande/bazel-examples, a git repository hosting a variety of Bazel related examples for public reference.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-03-09T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-03-09T00:00:00+00:00">
+    <meta property="article:tag" content="Examples">
+
+
+
+
+<link rel="canonical" href="https://steven.casagrande.io/posts/2025/introducing-bazel-examples/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.07092c1350ffd254998dc43a44ae96e617d14af4df4602626878df89189c5e1a.css" integrity="sha256-BwksE1D/0lSZjcQ6RK6W5hfRSvTfRgJiaHjfiRicXho=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-dark">
+  
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    
+    <a class="navigation-title" href="https://steven.casagrande.io/">
+      Steven Casagrande
+    </a>
+    
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Posts</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/bazel">Bazel</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="https://steven.casagrande.io/posts/2025/introducing-bazel-examples/">
+              Introducing bazel-examples
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2025-03-09T00:00:00Z">
+                March 9, 2025
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              2-minute read
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/bazel/">Bazel</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/examples/">Examples</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>In an effort to provide a consolidated location for all my current and future bazel-related examples, I have created a new centralized location for that on GitHub: <a href="https://github.com/scasagrande/bazel-examples"  class="external-link" target="_blank" rel="noopener">scasagrande/bazel-examples</a></p>
+<p>The intention here is to provide something similar to the <a href="https://github.com/aspect-build/bazel-examples"  class="external-link" target="_blank" rel="noopener">Aspect Build bazel-examples repository</a>, where others can come and find reference implementations for various common tasks. Some examples might be fully runnable bazel modules, while some might be bazel-adjacent code. As I include more I will aim to make a short corresponding post here.</p>
+<p>As of today, there are two included examples:</p>
+<h2 id="rustls-openssl-fips">
+  <a href="https://github.com/scasagrande/bazel-examples/tree/main/rustls-openssl-fips"  class="external-link" target="_blank" rel="noopener">rustls-openssl-fips</a>
+  <a class="heading-link" href="#rustls-openssl-fips">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>The goal for this example was to answer the common question of &ldquo;how do I get openssl-sys to build under rules_rust?&rdquo;, but to make a little more advanced by using this as a way to create an application that can use openssl with FIPS mode enabled.</p>
+<p>This example shows how to:</p>
+<ul>
+<li>Build a basic rustls application</li>
+<li>Use openssl as our crypto provider</li>
+<li>Bundle our application into an OCI image</li>
+<li>Start our application with FIPS mode enabled</li>
+</ul>
+<p>To get there, we use the following:</p>
+<ul>
+<li><a href="https://github.com/tofay/rustls-openssl"  class="external-link" target="_blank" rel="noopener">rustls-openssl</a> to use openssl as our crypto provider, instead of <a href="https://github.com/aws/aws-lc-rs"  class="external-link" target="_blank" rel="noopener">aws-ls-rs</a>. <a href="https://github.com/aws/aws-lc/blob/main/crypto/fipsmodule/FIPS.md"  class="external-link" target="_blank" rel="noopener">The latter can be FIPS-140-3 compliant</a>, but in this case we explicitly want to use openssl.</li>
+<li>rules_rust crate annotations in order to correctly build crate <a href="https://github.com/sfackler/rust-openssl"  class="external-link" target="_blank" rel="noopener">openssl-sys</a> under Bazel. This can be useful for anyone looking to depend on the openssl rust crate. See <a href="./third_party/BUILD.bazel" >third_party/BUILD.bazel</a> for details.</li>
+<li>Add our binary to a <a href="https://catalog.redhat.com/software/containers/ubi8/ubi-minimal"  class="external-link" target="_blank" rel="noopener">Red Hat Universal Base Image 8 Minimal</a> image, which will contain a FIPS-140-3 compliant copy of openssl.</li>
+<li>Uses a pre-built copy of openssl 1.1.1 that I provide at <a href="https://github.com/scasagrande/openssl-prebuilt"  class="external-link" target="_blank" rel="noopener">scasagrande/openssl-prebuilt</a>.</li>
+<li>container_structure_test to run our image and make sure that all tests report back as passing from inside the container.</li>
+</ul>
+<h2 id="rdkafka-sys">
+  <a href="https://github.com/scasagrande/bazel-examples/tree/main/rdkafka-sys"  class="external-link" target="_blank" rel="noopener">rdkafka-sys</a>
+  <a class="heading-link" href="#rdkafka-sys">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>Building the rdkafka-sys crate is a little commonly requested by the community in the Bazel slack, but can be tricky to implement. So I have provided an example on how to:</p>
+<ul>
+<li>Set up a basic rust project using crate <a href="https://crates.io/crates/rdkafka"  class="external-link" target="_blank" rel="noopener">rdkafka</a></li>
+<li>Define a bazel-native build of <a href="https://github.com/confluentinc/librdkafka"  class="external-link" target="_blank" rel="noopener">librdkafka</a></li>
+<li>Use crate annotations to correctly build crate <a href="https://crates.io/crates/rdkafka-sys"  class="external-link" target="_blank" rel="noopener">rdkafka-sys</a></li>
+</ul>
+<p>With that all defined, we can then run tests against a running kafka + zookeeper service.</p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
+    </div>
+
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+    2025
+     Steven Casagrande 
+    ·
+    
+    Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
+
+  </main>
+
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>
