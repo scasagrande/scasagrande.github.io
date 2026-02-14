@@ -41,7 +41,7 @@ After making the changes that I mentioned in that article, I noticed that the re
 Proceed with caution!
 At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building in my last article.
 After making the changes that I mentioned in that article, I noticed that the resulting containers for argon were having no issues, but builds of our app using latest were having issues finding a package. So I built our app container locally and I dived in to see what was wrong.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2016-04-22T00:00:00+00:00">
@@ -62,7 +62,7 @@ After making the changes that I mentioned in that article, I noticed that the re
 
   
   
-  <link rel="stylesheet" href="/css/coder.min.07092c1350ffd254998dc43a44ae96e617d14af4df4602626878df89189c5e1a.css" integrity="sha256-BwksE1D/0lSZjcQ6RK6W5hfRSvTfRgJiaHjfiRicXho=" crossorigin="anonymous" media="screen" />
+  <link rel="stylesheet" href="/css/coder.min.070807f22ed87a923883f1a61d2e227d67d923b7fa424ed9a2bf875f4949406e.css" integrity="sha256-BwgH8i7YepI4g/GmHS4ifWfZI7f6Qk7Zor&#43;HX0lJQG4=" crossorigin="anonymous" media="screen" />
 
 
 
@@ -198,27 +198,27 @@ After making the changes that I mentioned in that article, I noticed that the re
 
 <p>At work I was recently debugging some docker containers that were being built nightly by Jenkins. These were actually the same images that I was building <a href="https://steven.casagrande.io/posts/2016/automatically-building-docker-containers-with-different-base-image-tags/" >in my last article</a>.</p>
 <p>After making the changes that I mentioned in that article, I noticed that the resulting containers for <code>argon</code> were having no issues, but builds of our app using <code>latest</code> were having issues finding a package. So I built our app container locally and I dived in to see what was wrong.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run --rm -i -t --entrypoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span> container-name
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run --rm -i -t --entrypoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span> container-name
 </span></span></code></pre></div><p>This let me get a prompt inside the container to take a look at what the problem was. First I looked inside the <code>node_modules</code> folder to see if the package was messed up. What I instead noticed was that the container was missing a bunch of our dependencies! Then I got suspicious&hellip;</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ node --version
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ node --version
 </span></span><span style="display:flex;"><span>4.1.2
 </span></span></code></pre></div><p>What the fuck. This should be <code>5.10.1</code></p>
 <p>So I re-triggered the Jenkins job, blew everything away locally and re-pulled the <code>baseimage:latest</code> that Jenkins just built.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run --rm -i -t --entrypoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span> baseimage:latest
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run --rm -i -t --entrypoint<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/bin/bash&#34;</span> baseimage:latest
 </span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span># node --version
+</span></span></span><span style="display:flex;"><span># node --version
 </span></span><span style="display:flex;"><span>4.1.2
 </span></span></code></pre></div><p>FUCK</p>
 <p>So I check the Jenkins build log. Yes, it correctly spits out <code>FROM node:latest</code> when building the image. It pushes everything correctly. No errors, no typos.</p>
 <p>So I explicitly compare what I was running before in the Dockerfile to what I was running now. Before it was actually this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:5</span><span style="color:#960050;background-color:#1e0010">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">node:5</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><p>And now its:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:latest</span><span style="color:#960050;background-color:#1e0010">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">node:latest</span><span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><p>Currently, those point to the same image on Docker hub. It was at this point though that I realised what was going on. At some point months ago someone on this Jenkins box did a <code>docker pull node</code>. Then at build time, when docker read the <code>FROM node:latest</code> line, it would check locally, see the image, and just use that.</p>
 <p>This wasn&rsquo;t a problem before because <code>FROM node:5</code> would look locally, but not see anything tagged <code>node:5</code>. It would then pull it from Docker Hub, but not save the tag on the server! Thus, every time it ran it would re-pull the latest 5 release container.</p>
 <p>So the solution? Be explicit in what your project needs in your automated builds. Pull your base images before attempting to use them.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>TAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latest:argon&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span>TAGS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;latest:argon&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> tag in <span style="color:#e6db74">${</span>TAGS//:/ <span style="color:#e6db74">}</span>; <span style="color:#66d9ef">do</span>
 </span></span><span style="display:flex;"><span>    sed <span style="color:#e6db74">&#39;s/TAG/&#39;</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>tag<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">&#39;/&#39;</span> Dockerfile-template &gt; Dockerfile
@@ -255,7 +255,7 @@ After making the changes that I mentioned in that article, I noticed that the re
   <section class="container">
     ©
     
-    2025
+    2026
      Steven Casagrande 
     ·
     

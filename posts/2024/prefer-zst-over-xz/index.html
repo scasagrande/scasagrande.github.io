@@ -29,7 +29,7 @@ Before starting this work I already knew that decompressing our pre-built llvm t
   <meta property="og:title" content="Prefer ZST compression over XZ for use with Bazel">
   <meta property="og:description" content="Earlier this year, I was profiling our Bazel builds looking for any easy wins to speed up CI. One bottleneck I found was the decompression of fetched archives that were compressed with xz.
 Before starting this work I already knew that decompressing our pre-built llvm toolchain and sysroot package took a non-trivial amount of time. But with the full profiling data in hand I was able to see exactly how much time we were spending in CI on fetch vs decompression, how many tasks were waiting, and if there were any other decompression tasks taking a non-trivial amount of time.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2024-12-16T00:00:00+00:00">
@@ -51,7 +51,7 @@ Before starting this work I already knew that decompressing our pre-built llvm t
 
   
   
-  <link rel="stylesheet" href="/css/coder.min.07092c1350ffd254998dc43a44ae96e617d14af4df4602626878df89189c5e1a.css" integrity="sha256-BwksE1D/0lSZjcQ6RK6W5hfRSvTfRgJiaHjfiRicXho=" crossorigin="anonymous" media="screen" />
+  <link rel="stylesheet" href="/css/coder.min.070807f22ed87a923883f1a61d2e227d67d923b7fa424ed9a2bf875f4949406e.css" integrity="sha256-BwgH8i7YepI4g/GmHS4ifWfZI7f6Qk7Zor&#43;HX0lJQG4=" crossorigin="anonymous" media="screen" />
 
 
 
@@ -195,7 +195,7 @@ Before starting this work I already knew that decompressing our pre-built llvm t
   </a>
 </h2>
 <p>Using my Macbook Pro equipped with an M3-Pro, I started with fetching my macos-arm llvm toolchain, decompressed it, and then switched it to ZST as follows:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install pre-reqs, using gnu-tar to prevent any warnings caused by gnu-tar </span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Install pre-reqs, using gnu-tar to prevent any warnings caused by gnu-tar </span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># decompressing archives built with macOS bundled bsd-tar. This is optional, </span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># you can use `tar` if you like. </span>
 </span></span><span style="display:flex;"><span>brew install gnu-tar zstd
@@ -312,7 +312,7 @@ Before starting this work I already knew that decompressing our pre-built llvm t
   <section class="container">
     ©
     
-    2025
+    2026
      Steven Casagrande 
     ·
     

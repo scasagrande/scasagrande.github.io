@@ -38,7 +38,7 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
   <meta property="og:description" content="toolchains_llvm is a great Bazel ruleset for providing a hermetic llvm C / C&#43;&#43; (CC) toolchain.
 By default, this ruleset will download official llvm release packages. This is a good starting point, but you may want to build your own. Some reasons include:
 Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over your CC toolchain Downloading and extracting these large official releases is significantly impacting your CI startup time You want to use a version that doesn’t have official releases for your platforms By the end of this article you will be able to build your own macOS llvm package with libc&#43;&#43; for use with toolchains_llvm. In addition to native macOS builds, this toolchain will be able to cross-compile for both Linux-x86_64 and Linux-aarch64 with an appropriate Linux sysroot package.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2024-09-22T00:00:00+00:00">
@@ -59,7 +59,7 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
 
   
   
-  <link rel="stylesheet" href="/css/coder.min.07092c1350ffd254998dc43a44ae96e617d14af4df4602626878df89189c5e1a.css" integrity="sha256-BwksE1D/0lSZjcQ6RK6W5hfRSvTfRgJiaHjfiRicXho=" crossorigin="anonymous" media="screen" />
+  <link rel="stylesheet" href="/css/coder.min.070807f22ed87a923883f1a61d2e227d67d923b7fa424ed9a2bf875f4949406e.css" integrity="sha256-BwgH8i7YepI4g/GmHS4ifWfZI7f6Qk7Zor&#43;HX0lJQG4=" crossorigin="anonymous" media="screen" />
 
 
 
@@ -218,7 +218,7 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
 <li>Make sure you have <a href="https://developer.apple.com/xcode/"  class="external-link" target="_blank" rel="noopener">XCode</a> installed and operational through the Apple App Store.</li>
 <li>Next, use <a href="https://brew.sh/"  class="external-link" target="_blank" rel="noopener"><code>brew</code></a> (or your other preferred method) to install the following:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>brew install bzip2 cmake coreutils git lz4 make ninja xz zlib zstd
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>brew install bzip2 cmake coreutils git lz4 make ninja xz zlib zstd
 </span></span></code></pre></div><h2 id="build">
   Build
   <a class="heading-link" href="#build">
@@ -228,7 +228,7 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
 </h2>
 <p>Now we&rsquo;re ready to invoke the build. For this example, I am building version 17.0.6. This will be using a multi-stage build process, so expect it to take a while. This took approx 40min on my M3 Macbook pro.</p>
 <p>The build will match your system architecture. If you need to generate packages for both x86_64 and aarch64/arm64, you will need to execute this build on both platforms.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>./build-macos-llvm.sh 17.0.6 ~/clang-17.0.6-aarch64-apple-darwin.tar.xz
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>./build-macos-llvm.sh 17.0.6 ~/clang-17.0.6-aarch64-apple-darwin.tar.xz
 </span></span></code></pre></div><p>For me, this resulted in an approximately 125MB package, down from 767MB for the official release. Could this be even smaller? Probably. If you see more files that can be deleted, feel free to submit a PR!</p>
 <h2 id="test">
   Test
@@ -239,14 +239,14 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
 </h2>
 <p>Before we upload this package to your team&rsquo;s or organization&rsquo;s file storage system (eg, <a href="https://jfrog.com/artifactory/"  class="external-link" target="_blank" rel="noopener">Artifactory</a>) we want to test it to make sure it will work for your project.</p>
 <p>Let&rsquo;s start by unpacking this archive to a temporary folder on your system. Here we will use <code>/tmp/llvm</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>mkdir /tmp/llvm
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>mkdir /tmp/llvm
 </span></span><span style="display:flex;"><span>tar xf ~/clang-17.0.6-aarch64-apple-darwin.tar.xz -C /tmp/llvm
 </span></span></code></pre></div><p>Copy this build file onto your unpacked dir:
 <a href="https://github.com/bazel-contrib/toolchains_llvm/blob/v1.1.2/toolchain/BUILD.llvm_repo"  class="external-link" target="_blank" rel="noopener">https://github.com/bazel-contrib/toolchains_llvm/blob/v1.1.2/toolchain/BUILD.llvm_repo</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>wget https://raw.githubusercontent.com/bazel-contrib/toolchains_llvm/refs/tags/v1.1.2/toolchain/BUILD.llvm_repo -O /tmp/llvm/BUILD.llvm_repo
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>wget https://raw.githubusercontent.com/bazel-contrib/toolchains_llvm/refs/tags/v1.1.2/toolchain/BUILD.llvm_repo -O /tmp/llvm/BUILD.llvm_repo
 </span></span></code></pre></div><p>Update your project to point to this unpacked directory:</p>
 <p><code>MODULE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>llvm <span style="color:#f92672">=</span> use_extension(<span style="color:#e6db74">&#34;@toolchains_llvm//toolchain/extensions:llvm.bzl&#34;</span>, <span style="color:#e6db74">&#34;llvm&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>llvm<span style="color:#f92672">.</span>toolchain(
@@ -269,7 +269,7 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
 </h2>
 <p>Once everything has passed, and you&rsquo;re ready to share this toolchain with your colleagues, upload it to your file store platform and update your toolchains_llvm configuration like so:</p>
 <p><code>MODULE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>llvm <span style="color:#f92672">=</span> use_extension(<span style="color:#e6db74">&#34;@toolchains_llvm//toolchain/extensions:llvm.bzl&#34;</span>, <span style="color:#e6db74">&#34;llvm&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>llvm<span style="color:#f92672">.</span>toolchain(
@@ -324,7 +324,7 @@ Not wanting to rely on GitHub hosted artifacts Wanting to take ownership over yo
   <section class="container">
     ©
     
-    2025
+    2026
      Steven Casagrande 
     ·
     

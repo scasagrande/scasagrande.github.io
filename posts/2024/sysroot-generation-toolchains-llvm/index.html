@@ -26,7 +26,7 @@
   <meta property="og:site_name" content="Steven Casagrande">
   <meta property="og:title" content="Sysroot package generation for use with toolchains_llvm">
   <meta property="og:description" content="How to generate a sysroot package for use with the Bazel ruleset [`toolchains_llvm`][toolchains_llvm] in order to utilize a hermetic llvm-clang C/C&#43;&#43; compiler toolchain.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2024-03-23T00:00:00+00:00">
@@ -48,7 +48,7 @@
 
   
   
-  <link rel="stylesheet" href="/css/coder.min.07092c1350ffd254998dc43a44ae96e617d14af4df4602626878df89189c5e1a.css" integrity="sha256-BwksE1D/0lSZjcQ6RK6W5hfRSvTfRgJiaHjfiRicXho=" crossorigin="anonymous" media="screen" />
+  <link rel="stylesheet" href="/css/coder.min.070807f22ed87a923883f1a61d2e227d67d923b7fa424ed9a2bf875f4949406e.css" integrity="sha256-BwgH8i7YepI4g/GmHS4ifWfZI7f6Qk7Zor&#43;HX0lJQG4=" crossorigin="anonymous" media="screen" />
 
 
 
@@ -211,7 +211,7 @@
 </div>
 
 <p><code>MODULE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#75715e"># Configure and register the toolchain.</span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>llvm <span style="color:#f92672">=</span> use_extension(<span style="color:#e6db74">&#34;@toolchains_llvm//toolchain/extensions:llvm.bzl&#34;</span>, <span style="color:#e6db74">&#34;llvm&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
@@ -229,7 +229,7 @@
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>register_toolchains(<span style="color:#e6db74">&#34;@llvm_toolchain//:all&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span></code></pre></div><p>or for projects using the legacy <code>WORKSPACE</code> system:</p>
 <p><code>WORKSPACE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>load(<span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>load(<span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>http_archive(
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>,
@@ -289,7 +289,7 @@
 </div>
 
 <p>So now lets go ahead and build it. These commands will build our two sysroot packages with these extra ssl libraries bundled in, and output them into our current directory.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ ./build.sh x86_64 . ssl
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ ./build.sh x86_64 . ssl
 </span></span><span style="display:flex;"><span>$ ./build.sh aarch64 . ssl
 </span></span></code></pre></div><p>If you want to omit these ssl related packages, then replace <code>ssl</code> with <code>base</code>.</p>
 <p>After some processing time, you will be left with 2 <code>tar.xz</code> files. If you have been following along, the <code>x86_64</code> file should be approximately 55MB, and the <code>aarch64</code> file approximately 35MB.</p>
@@ -302,7 +302,7 @@
 </h1>
 <p>First we need to make the <code>tar.xz</code> files available to Bazel. You&rsquo;ll need to make your sysroot package available somewhere for your team to download, such as in <a href="https://jfrog.com/artifactory/"  class="external-link" target="_blank" rel="noopener">Artifactory</a>. How you do that is up to you. For testing, you can put in a fake URL and use the <code>--override_repository=</code> CLI argument built into Bazel.</p>
 <p><code>MODULE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>http_archive <span style="color:#f92672">=</span> use_repo_rule(<span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>http_archive <span style="color:#f92672">=</span> use_repo_rule(<span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>http_archive(
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sysroot_linux_x86_64_2_28&#34;</span>,
@@ -318,7 +318,7 @@
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    build_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;//external:BUILD.sysroot.bazel&#34;</span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>)
 </span></span></code></pre></div><p><code>WORKSPACE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>load(<span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>load(<span style="color:#e6db74">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span>, <span style="color:#e6db74">&#34;http_archive&#34;</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>http_archive(
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sysroot_linux_x86_64_2_28&#34;</span>,
@@ -334,14 +334,14 @@
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    build_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;//external:BUILD.sysroot.bazel&#34;</span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>)
 </span></span></code></pre></div><p><code>external/BUILD.sysroot.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>filegroup(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>filegroup(
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sysroot&#34;</span>,
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>    srcs <span style="color:#f92672">=</span> glob([<span style="color:#e6db74">&#34;**&#34;</span>]),
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>    visibility <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;//visibility:public&#34;</span>]
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>)
 </span></span></code></pre></div><p>And then we just need to update our toolchain definition to use these new sysroot package when building and targeting linux <code>x86_64</code> and <code>aarch64</code>.</p>
 <p><code>MODULE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>bazel_dep(name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;toolchains_llvm&#34;</span>, version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1.1.2&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>llvm <span style="color:#f92672">=</span> use_extension(<span style="color:#e6db74">&#34;@toolchains_llvm//toolchain/extensions:llvm.bzl&#34;</span>, <span style="color:#e6db74">&#34;llvm&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>llvm<span style="color:#f92672">.</span>toolchain(
@@ -365,7 +365,7 @@
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>register_toolchains(<span style="color:#e6db74">&#34;@llvm_toolchain//:all&#34;</span>, dev_dependency <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>)
 </span></span></code></pre></div><p><code>WORKSPACE.bazel</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>llvm_toolchain(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;display:grid;"><code class="language-bzl" data-lang="bzl"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>llvm_toolchain(
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>    name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;llvm_toolchain&#34;</span>,
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>    llvm_version <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;15.0.2&#34;</span>,
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>    stdlib <span style="color:#f92672">=</span> {
@@ -379,7 +379,7 @@
 </span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>)
 </span></span></code></pre></div><p>Optionally, we can test our build without having uploaded the <code>tar.xz</code>. Start with unpacking the tar file into a folder on your filesystem. Next make a <code>BUILD.bazel</code> file located at the root of this extracted folder (that is, beside the extracted <code>usr/</code> folder) with the contents from your <code>BUILD.sysroot.bazel</code> file.</p>
 <p>Finally, to execute your test, run the following if you are building on a Linux x86_64 machine:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ bazel build --override_repository<span style="color:#f92672">=</span>sysroot_linux_x86_64_2_28<span style="color:#f92672">=</span>/path/to/sysroot-x86_64-ssl //...
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ bazel build --override_repository<span style="color:#f92672">=</span>sysroot_linux_x86_64_2_28<span style="color:#f92672">=</span>/path/to/sysroot-x86_64-ssl //...
 </span></span></code></pre></div><h1 id="result">
   Result
   <a class="heading-link" href="#result">
@@ -426,7 +426,7 @@
   <section class="container">
     ©
     
-    2025
+    2026
      Steven Casagrande 
     ·
     
